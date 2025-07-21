@@ -1,0 +1,25 @@
+{
+  "name": "tip_tap_demo_2",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^7.0.4"
+  },
+  "dependencies": {
+    "@tiptap/core": "^3.0.7",
+    "@tiptap/extension-bubble-menu": "^3.0.7",
+    "@tiptap/extension-image": "^3.0.7",
+    "@tiptap/extension-list": "^3.0.7",
+    "@tiptap/extension-table": "^3.0.7",
+    "@tiptap/extension-text-align": "^3.0.7",
+    "@tiptap/extension-text-style": "^3.0.7",
+    "@tiptap/pm": "^3.0.7",
+    "@tiptap/starter-kit": "^3.0.7"
+  }
+}
