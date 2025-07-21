@@ -66,7 +66,7 @@ const bubbleMenuDiv = document.createElement('div');
 bubbleMenuDiv.id = 'bubble-menu';
 bubbleMenuDiv.className = 'bubble-menu absolute bg-white border border-gray-300 rounded shadow-lg p-1';
 bubbleMenuDiv.style.zIndex = '2000';
-bubbleMenuDiv.style.display = 'flex';
+bubbleMenuDiv.style.display = 'none';
 editorDiv.appendChild(bubbleMenuDiv);
 
 // bubble menu actions (Bold, Align Left, Align Center, Align Right, Align Justify
@@ -157,6 +157,12 @@ const editor = new Editor({
     }),
     BubbleMenu.configure({
       element: document.querySelector('#bubble-menu'),
+      shouldShow: ({ editor, view, state, from, to }) => {
+        // Only show when there is a text selection
+        let r = from !== to && editor.isFocused;
+        bubbleMenuDiv.style.display = r ? 'block' : 'none';
+        return r;
+      },
     }),
     Italic,
   ],
