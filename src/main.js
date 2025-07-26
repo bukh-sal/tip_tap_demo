@@ -38,6 +38,8 @@ import Italic from '@tiptap/extension-italic'
 
 import DragHandle from '@tiptap/extension-drag-handle'
 
+import Link from '@tiptap/extension-link'
+
 const editorDiv = document.querySelector('#tiptap_editor');
 const schemaViewer = document.querySelector('#schema_viewer');
 
@@ -233,7 +235,10 @@ const editor = new Editor({
       },
 
     }),
-
+    Link.configure({
+      defaultProtocol: 'https',
+      shouldAutoLink: (url) => url.startsWith('https://'),
+    })
   ],
   autofocus: "start",
   content: defaultSchema || '',
@@ -281,6 +286,51 @@ const italicButtons = document.querySelectorAll('[editor-action="italic"]');
 for (const button of italicButtons) {
   button.addEventListener('click', () => {
     editor.chain().focus().toggleItalic().run();
+  });
+}
+
+const quoteButtons = document.querySelectorAll('[editor-action="quote"]');
+for (const button of quoteButtons) {
+  button.addEventListener('click', () => {
+    editor.chain().focus().toggleBlockquote().run();
+  });
+}
+
+const codeButtons = document.querySelectorAll('[editor-action="code"]');
+for (const button of codeButtons) {
+  button.addEventListener('click', () => {
+    editor.chain().focus().toggleCodeBlock().run();
+  });
+}
+
+const linkButtons = document.querySelectorAll('[editor-action="link"]');
+for (const button of linkButtons) {
+  button.addEventListener('click', () => {
+    const linkUrl = prompt('Enter link URL:');
+    if (linkUrl) {
+      editor.chain().focus().setLink({ href: linkUrl }).run();
+    }
+  });
+}
+
+const fontSizeSelects = document.querySelectorAll('[editor-action="select-font-size"]');
+for (const select of fontSizeSelects) {
+  // we have 3 types of editor actions for the options (clear-font-size, set-heading, set-pixel-size)
+  select.addEventListener('change', (event) => {
+    const selectedOption = event.target.options[event.target.selectedIndex];
+    const actionType = selectedOption.getAttribute('editor-action');
+    if (actionType === 'clear-font-size') {
+        editor.chain().focus().setNode('paragraph').run();
+        editor.chain().focus().unsetFontSize().run();
+    }
+    else if (actionType === 'set-pixel-size') {
+      editor.chain().focus().setNode('paragraph').run();
+      editor.chain().focus().setFontSize(selectedOption.value).run();
+    }
+    else if (actionType === 'set-heading') {
+      editor.chain().focus().unsetFontSize().run();
+      editor.chain().focus().setHeading({ level: parseInt(selectedOption.value) }).run();
+    }
   });
 }
 
