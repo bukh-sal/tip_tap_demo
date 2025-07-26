@@ -64,48 +64,78 @@ function renderSchema(editor) {
 
 const bubbleMenuDiv = document.createElement('div');
 bubbleMenuDiv.id = 'bubble-menu';
-bubbleMenuDiv.className = 'bubble-menu absolute bg-white border border-gray-300 rounded shadow-lg p-1';
+bubbleMenuDiv.className = 'bubble-menu absolute bg-white/40 backdrop-blur-[2px] border border-gray-300 rounded-md shadow-xs';
 bubbleMenuDiv.style.zIndex = '2000';
 bubbleMenuDiv.style.display = 'none';
 editorDiv.appendChild(bubbleMenuDiv);
 
-// bubble menu actions (Bold, Align Left, Align Center, Align Right, Align Justify
+// bubble menu actions (Bold, Italic, Underline, Strikethrough, Align Left, Align Center, Align Right, Align Justify)
 const bubbleMenuActions = document.createElement('div');
-bubbleMenuActions.className = 'bubble-menu-actions gap-1 flex flex-wrap justify-start items-center';
+bubbleMenuActions.className = 'bubble-menu-actions gap-0 flex flex-wrap justify-center items-center';
 bubbleMenuDiv.appendChild(bubbleMenuActions);
 
 const bubbleMenuButtons = [
   {
     "editor-action": 'bold',
-    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bold-icon lucide-bold"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></svg>',
+    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bold-icon lucide-bold"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></svg>',
     "title": "Bold"
   },
   {
     "editor-action": 'italic',
-    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-italic-icon lucide-italic"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg>',
+    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-italic-icon lucide-italic"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg>',
     "title": "Italic"
   },
   {
+    "editor-action": 'underline',
+    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-underline-icon lucide-underline"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>',
+    "title": "Underline"
+  },
+  {
+    "editor-action": 'strikethrough',
+    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-strikethrough-icon lucide-strikethrough"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>',
+    "title": "Strikethrough"
+  },
+  {
+    "editor-action": 'separator',
+    "icon": '<span class="border border-r border-gray-300/70 py-3 mx-1"></span>',
+    "title": ""
+  },
+  {
     "editor-action": 'align-left',
-    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-left-icon lucide-align-left"><path d="M15 12H3"/><path d="M17 18H3"/><path d="M21 6H3"/></svg>',
+    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-left-icon lucide-align-left"><path d="M15 12H3"/><path d="M17 18H3"/><path d="M21 6H3"/></svg>',
     "title": "Align Left"
   },
   {
     "editor-action": 'align-center',
-    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-center-icon lucide-align-center"><path d="M21 12H9"/><path d="M21 18H7"/><path d="M21 6H3"/></svg>',
+    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-center-icon lucide-align-center"><path d="M17 12H7"/><path d="M19 18H5"/><path d="M21 6H3"/></svg>',
     "title": "Align Center"
+  },
+  {
+    "editor-action": 'align-right',
+    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-right-icon lucide-align-right"><path d="M21 12H9"/><path d="M21 18H7"/><path d="M21 6H3"/></svg>',
+    "title": "Align Right"
+  },
+  {
+    "editor-action": 'align-justify',
+    "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify-icon lucide-align-justify"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>',
+    "title": "Align Justify"
   }
-  // rest of the buttons
 ];
 
 bubbleMenuButtons.forEach(button => {
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.setAttribute('editor-action', button['editor-action']);
-  btn.className = 'px-1 py-1 text-black text-sm rounded border border-gray-300 hover:border-gray-400 active:bg-gray-200';
-  btn.innerHTML = button.icon;
-  btn.title = button.title;
-  bubbleMenuActions.appendChild(btn);
+  if (button['editor-action'] === 'separator') {
+    const separator = document.createElement('span');
+    separator.className = 'border border-r border-gray-300/70 py-3 mx-1';
+    bubbleMenuActions.appendChild(separator);
+  } else {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.setAttribute('editor-action', button['editor-action']);
+    btn.className = 'px-2 py-2 text-black/65 text-sm rounded hover:bg-gray-200/70';
+    btn.innerHTML = button.icon;
+    btn.title = button.title;
+    bubbleMenuActions.appendChild(btn);
+  }
 });
 
 
