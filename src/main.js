@@ -36,6 +36,7 @@ import { BubbleMenu } from '@tiptap/extension-bubble-menu'
 
 import Italic from '@tiptap/extension-italic'
 
+import DragHandle from '@tiptap/extension-drag-handle'
 
 const editorDiv = document.querySelector('#tiptap_editor');
 const schemaViewer = document.querySelector('#schema_viewer');
@@ -139,6 +140,27 @@ bubbleMenuButtons.forEach(button => {
 });
 
 
+// custom-drag-handle
+const dragHandleCustomStyle = document.createElement('style');
+dragHandleCustomStyle.innerHTML = `
+.drag-handle {
+  align-items: center;
+  background: #f0f0f0;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  display: flex;
+  height: 1.5rem;
+  justify-content: center;
+  width: 1.5rem;
+}
+
+.hovered-over-node {
+  background-color: #f0f0f0;
+}
+
+`;
+
 
 const editor = new Editor({
   element: editorDiv,
@@ -195,6 +217,23 @@ const editor = new Editor({
       },
     }),
     Italic,
+    DragHandle.configure({
+      render: () => {
+        const element = document.createElement('div')
+        // Use as a hook for CSS to insert an icon
+        element.classList.add('drag-handle')
+        element.innerHTML = `
+          <svg class="text-gray-300 me-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-grip-vertical-icon lucide-grip-vertical"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg>
+        `;
+        return element
+      },
+
+      onNodeChange: ({ node, editor, pos }) => {
+        // can be used to add options (delete, insert, table actions, etc..) to the drag handle
+      },
+
+    }),
+
   ],
   autofocus: "start",
   content: defaultSchema || '',
