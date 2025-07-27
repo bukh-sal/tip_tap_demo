@@ -417,3 +417,15 @@ for (const picker of customColorPickers) {
     editor.chain().focus().setColor(color).run();
   });
 }
+
+const fontFamilyPickers = document.querySelectorAll('.font-family-picker');
+for (const picker of fontFamilyPickers) {
+  picker.addEventListener('change', (event) => {
+    const fontFamily = event.target.value;
+    if (fontFamily) {
+      editor.chain().focus().setFontFamily(fontFamily).run();
+    } else {
+      editor.chain().focus().unsetFontFamily().run();
+    }
+  });
+}
