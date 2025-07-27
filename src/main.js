@@ -134,16 +134,16 @@ function getCurrentAlignment(editor) {
 const getTextStyleState = (editor) => {
   const textAlign = getCurrentAlignment(editor);
   return {
-    bold: editor.isActive('bold'),
-    italic: editor.isActive('italic'),
-    underline: editor.isActive('underline'),
-    strike: editor.isActive('strike'),
-    code: editor.isActive('code'),
-    fontSize: editor.getAttributes('textStyle').fontSize || '19px',
-    color: editor.getAttributes('textStyle').color || 'default',
-    backgroundColor: editor.getAttributes('textStyle').backgroundColor || 'default',
-    fontFamily: editor.getAttributes('textStyle').fontFamily || 'default',
-    quote: editor.isActive('quote'),
+    bold: editor.isActive('bold') || null,
+    italic: editor.isActive('italic') || null,
+    underline: editor.isActive('underline') || null,
+    strike: editor.isActive('strike') || null,
+    code: editor.isActive('code') || null,
+    fontSize: editor.getAttributes('textStyle').fontSize || null,
+    color: editor.getAttributes('textStyle').color || null,
+    backgroundColor: editor.getAttributes('textStyle').backgroundColor || null,
+    fontFamily: editor.getAttributes('textStyle').fontFamily || null,
+    quote: editor.isActive('quote') || null,
     textAlign: textAlign,
   };
 };
