@@ -2213,3 +2213,19 @@ img,video {
     cursor: col-resize;
   }
 }
+
+.drag-handle {
+  align-items: center;
+  background: #f0f0f0;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  display: flex;
+  height: 1.5rem;
+  justify-content: center;
+  width: 1.5rem;
+}
+
+.hovered-over-node {
+  background-color: #f0f0f0;
+}

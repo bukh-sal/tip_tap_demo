@@ -1,48 +1,28 @@
-// The editor is responsible for creating and showing the schema
 import { Editor } from '@tiptap/core'
-// Everything goes inside the Document (it's the top level node)
 import Document from '@tiptap/extension-document'
-// text and paragraph required for every schema
-// These are the basic extensions that are always included
 import Text from '@tiptap/extension-text'
 import Paragraph from '@tiptap/extension-paragraph'
-
-// ALlows adding a blockquote using the > character
 import BlockQuote from '@tiptap/extension-blockquote'
-
-// allows adding creating quick lists using the * or - characters
 import { BulletList, ListItem, OrderedList  } from '@tiptap/extension-list'
-
 import CodeBlock from '@tiptap/extension-code-block'
 import Heading from '@tiptap/extension-heading'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
-
 import Image from '@tiptap/extension-image'
 import { Dropcursor } from '@tiptap/extensions'
-
 import { TableKit } from '@tiptap/extension-table'
 import { Gapcursor } from '@tiptap/extensions'
-
 import { TaskItem, TaskList } from '@tiptap/extension-list'
-
 import { Placeholder } from '@tiptap/extensions'
-
 import Bold from '@tiptap/extension-bold'
 import { TextStyleKit } from '@tiptap/extension-text-style'
-
 import TextAlign from '@tiptap/extension-text-align'
-
 import { BubbleMenu } from '@tiptap/extension-bubble-menu'
-
 import Italic from '@tiptap/extension-italic'
-
 import DragHandle from '@tiptap/extension-drag-handle'
-
 import Link from '@tiptap/extension-link'
-
 import Strike from '@tiptap/extension-strike'
-
 import Underline from '@tiptap/extension-underline'
+
 
 const editorDiv = document.querySelector('#tiptap_editor');
 const schemaViewer = document.querySelector('#schema_viewer');
@@ -144,28 +124,6 @@ bubbleMenuButtons.forEach(button => {
     bubbleMenuActions.appendChild(btn);
   }
 });
-
-
-// custom-drag-handle
-const dragHandleCustomStyle = document.createElement('style');
-dragHandleCustomStyle.innerHTML = `
-.drag-handle {
-  align-items: center;
-  background: #f0f0f0;
-  border-radius: 0.25rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  cursor: grab;
-  display: flex;
-  height: 1.5rem;
-  justify-content: center;
-  width: 1.5rem;
-}
-
-.hovered-over-node {
-  background-color: #f0f0f0;
-}
-
-`;
 
 
 const editor = new Editor({
