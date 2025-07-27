@@ -126,6 +126,148 @@ bubbleMenuButtons.forEach(button => {
   }
 });
 
+function getCurrentAlignment(editor) {
+  const attributes = editor.getAttributes('paragraph') || editor.getAttributes('heading');
+  return attributes.textAlign || 'left'; // default to 'left' if no alignment set
+}
+
+const getTextStyleState = (editor) => {
+  const textAlign = getCurrentAlignment(editor);
+  return {
+    bold: editor.isActive('bold'),
+    italic: editor.isActive('italic'),
+    underline: editor.isActive('underline'),
+    strike: editor.isActive('strike'),
+    code: editor.isActive('code'),
+    fontSize: editor.getAttributes('textStyle').fontSize || '19px',
+    color: editor.getAttributes('textStyle').color || 'default',
+    backgroundColor: editor.getAttributes('textStyle').backgroundColor || 'default',
+    fontFamily: editor.getAttributes('textStyle').fontFamily || 'default',
+    quote: editor.isActive('quote'),
+    textAlign: textAlign,
+  };
+};
+
+
+function updateFormattingSelections(editor) {
+  const textStyleState = getTextStyleState(editor);
+
+  // update bold button
+  const boldButtons = document.querySelectorAll('button[editor-action="bold"]');
+  for (const btn of boldButtons) {
+      btn.classList.remove('bg-gray-200/70');
+      if (textStyleState.bold) {
+        btn.classList.add('bg-gray-200/70');
+      }
+  }
+
+  // update italic button
+  const italicButtons = document.querySelectorAll('button[editor-action="italic"]');
+  for (const btn of italicButtons) {
+    btn.classList.remove('bg-gray-200/70');
+    if (textStyleState.italic) {
+      btn.classList.add('bg-gray-200/70');
+    }
+  }
+
+  // update underline button
+  const underlineButtons = document.querySelectorAll('button[editor-action="underline"]');
+  for (const btn of underlineButtons) {
+    btn.classList.remove('bg-gray-200/70');
+    if (textStyleState.underline) {
+      btn.classList.add('bg-gray-200/70');
+    }
+  }
+
+  // update strike button
+  const strikeButtons = document.querySelectorAll('button[editor-action="strikethrough"]');
+  for (const btn of strikeButtons) {
+    btn.classList.remove('bg-gray-200/70');
+    if (textStyleState.strike) {
+      btn.classList.add('bg-gray-200/70');
+    }
+  }
+
+  // update font size dropdown
+  const fontSizeDropdowns = document.querySelectorAll('[editor-action="select-font-size"]');
+  for (const ddown of fontSizeDropdowns) {
+    if (textStyleState.fontSize) {
+      const options = ddown.querySelectorAll('option');
+      for (const opt of options) {
+        if (opt.value == textStyleState.fontSize) {
+          opt.selected = true;
+        }
+      }
+    } else {
+      // reset to default (option where value = "")
+      ddown.value = "";
+    }
+  }
+
+  // update font family drop down
+  const fontFamilyDropdowns = document.querySelectorAll('.font-family-picker');
+  for (const ddown of fontFamilyDropdowns) {
+    if (textStyleState.fontFamily) {
+      const options = ddown.querySelectorAll('option');
+      for (const opt of options) {
+        if (opt.value == textStyleState.fontFamily) {
+          opt.selected = true;
+        }
+      }
+    } else {
+      // reset to default (option where value = "")
+      ddown.value = "";
+    }
+  }
+
+  // update font color
+  const fontColorPreviews = document.querySelectorAll('.current-color');
+  for (const preview of fontColorPreviews) {
+    if (textStyleState.color) {
+      preview.style.backgroundColor = textStyleState.color;
+    } else {
+      preview.style.backgroundColor = '#000000';
+    }
+  }
+
+  // update align-left
+  const alignLeftButtons = document.querySelectorAll('button[editor-action="align-left"]');
+  for (const btn of alignLeftButtons) {
+    btn.classList.remove('bg-gray-200/70');
+    if (textStyleState.textAlign == 'left') {
+      btn.classList.add('bg-gray-200/70');
+    }
+  }
+
+  // update align cetner
+  const alignCenterButtons = document.querySelectorAll('button[editor-action="align-center"]');
+  for (const btn of alignCenterButtons) {
+    btn.classList.remove('bg-gray-200/70');
+    if (textStyleState.textAlign == 'center') {
+      btn.classList.add('bg-gray-200/70');
+    }
+  }
+
+  // update align right
+  const alignRightButtons = document.querySelectorAll('button[editor-action="align-right"]');
+  for (const btn of alignRightButtons) {
+    btn.classList.remove('bg-gray-200/70');
+    if (textStyleState.textAlign == 'right') {
+      btn.classList.add('bg-gray-200/70');
+    }
+  }
+
+  // update align-justify
+  const alignJustifyButtons = document.querySelectorAll('button[editor-action="align-justify"]');
+  for (const btn of alignJustifyButtons) {
+    btn.classList.remove('bg-gray-200/70');
+    if (textStyleState.textAlign == 'justify') {
+      btn.classList.add('bg-gray-200/70');
+    }
+  }
+
+}
+
 
 const editor = new Editor({
   element: editorDiv,
@@ -174,6 +316,11 @@ const editor = new Editor({
       shouldShow: ({ editor, view, state, from, to }) => {
         // Only show when there is a text selection
         let r = from !== to && editor.isFocused;
+        if (r) {
+          setTimeout(() => {
+            updateFormattingSelections(editor);
+          }, 5);
+        }
         bubbleMenuDiv.style.display = r ? 'block' : 'none';
         return r;
       },
@@ -205,32 +352,22 @@ const editor = new Editor({
   ],
   autofocus: "start",
   content: defaultSchema || '',
-  onUpdate: () => {
+  onUpdate: ({ editor }) => {
     renderSchema(editor);
     saveSchemaToLocalStorage(editor.getJSON());
+    updateFormattingSelections(editor);
   },
+  onSelectionUpdate: ({ editor }) => {
+    updateFormattingSelections(editor);
+  }
 })
 
 // Initialize the editor and store the schema
 renderSchema(editor);
 
-const getTextStyleState = () => {
-  return {
-    bold: editor.isActive('bold'),
-    italic: editor.isActive('italic'),
-    underline: editor.isActive('underline'),
-    strike: editor.isActive('strike'),
-    code: editor.isActive('code'),
-    fontSize: editor.getAttributes('textStyle').fontSize || '19px',
-    color: editor.getAttributes('textStyle').color || 'default',
-    backgroundColor: editor.getAttributes('textStyle').backgroundColor || 'default',
-    fontFamily: editor.getAttributes('textStyle').fontFamily || 'default',
-  };
-};
-
 function incrimentFontSize() {
   const maxFontSize = 192;
-  const currentFontSize = getTextStyleState().fontSize;
+  const currentFontSize = getTextStyleState(editor).fontSize;
   let newFontSize = parseInt(currentFontSize) + 1;
   if (newFontSize > maxFontSize) newFontSize = maxFontSize;
   if (currentFontSize == newFontSize) return;
@@ -239,7 +376,7 @@ function incrimentFontSize() {
 
 function decrementFontSize() {
   const minFontSize = 3;
-  const currentFontSize = getTextStyleState().fontSize;
+  const currentFontSize = getTextStyleState(editor).fontSize;
   let newFontSize = parseInt(currentFontSize) - 1;
   
   if (newFontSize < minFontSize) newFontSize = minFontSize;
