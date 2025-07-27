@@ -400,3 +400,20 @@ for (const button of redoButtons) {
     editor.chain().focus().redo().run();
   });
 }
+
+const colorChoices = document.querySelectorAll('.color-swatch');
+for (const colorChoice of colorChoices) {
+  colorChoice.addEventListener('click', () => {
+    // data-color
+    const color = colorChoice.dataset.color;
+    editor.chain().focus().setColor(color).run();
+  });
+}
+
+const customColorPickers = document.querySelectorAll('.custom-color-picker');
+for (const picker of customColorPickers) {
+  picker.addEventListener('input', (event) => {
+    const color = event.target.value;
+    editor.chain().focus().setColor(color).run();
+  });
+}
