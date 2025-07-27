@@ -257,6 +257,54 @@ const editor = new Editor({
 // Initialize the editor and store the schema
 renderSchema(editor);
 
+const getTextStyleState = () => {
+  return {
+    bold: editor.isActive('bold'),
+    italic: editor.isActive('italic'),
+    underline: editor.isActive('underline'),
+    strike: editor.isActive('strike'),
+    code: editor.isActive('code'),
+    fontSize: editor.getAttributes('textStyle').fontSize || '19px',
+    color: editor.getAttributes('textStyle').color || 'default',
+    backgroundColor: editor.getAttributes('textStyle').backgroundColor || 'default',
+    fontFamily: editor.getAttributes('textStyle').fontFamily || 'default',
+  };
+};
+
+function incrimentFontSize() {
+  const maxFontSize = 192;
+  const currentFontSize = getTextStyleState().fontSize;
+  let newFontSize = parseInt(currentFontSize) + 1;
+  if (newFontSize > maxFontSize) newFontSize = maxFontSize;
+  if (currentFontSize == newFontSize) return;
+  editor.chain().focus().setFontSize(newFontSize + 'px').run();
+}
+
+function decrementFontSize() {
+  const minFontSize = 3;
+  const currentFontSize = getTextStyleState().fontSize;
+  let newFontSize = parseInt(currentFontSize) - 1;
+  
+  if (newFontSize < minFontSize) newFontSize = minFontSize;
+  if (currentFontSize == newFontSize) return;
+
+  editor.chain().focus().setFontSize(newFontSize + 'px').run();
+}
+
+// bind CTRL + [ to decrement font size
+document.addEventListener('keydown', (event) => {
+  if (event.ctrlKey && event.key === '[') {
+    decrementFontSize();
+  }
+});
+
+// bind CTRL + ] to increment font size
+document.addEventListener('keydown', (event) => {
+  if (event.ctrlKey && event.key === ']') {
+    incrimentFontSize();
+  }
+});
+
 
 // Buttons
 
