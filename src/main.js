@@ -160,9 +160,6 @@ const editor = new Editor({
         if (node.type.name === 'heading') {
           return 'Heading';
         }
-        if (node.type.name === 'codeBlock') {
-          return 'Write some code...';
-        }
         return '';
       }
     }),
