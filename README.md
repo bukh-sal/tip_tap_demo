@@ -6,7 +6,6 @@ A modern rich text editor demo built with [Tiptap](https://tiptap.dev/), Tailwin
 
 - **Rich Text Editing** powered by Tiptap
 - **Customizable Toolbar** with undo/redo, font, size, color, alignment, and formatting controls
-- **Floating Table of Contents** (TOC) icon that expands on hover/click
 - **Responsive Design** using Tailwind CSS
 - **Modern UI** with backdrop blur, shadows, and custom fonts
 
