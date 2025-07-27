@@ -40,6 +40,10 @@ import DragHandle from '@tiptap/extension-drag-handle'
 
 import Link from '@tiptap/extension-link'
 
+import Strike from '@tiptap/extension-strike'
+
+import Underline from '@tiptap/extension-underline'
+
 const editorDiv = document.querySelector('#tiptap_editor');
 const schemaViewer = document.querySelector('#schema_viewer');
 
@@ -238,7 +242,9 @@ const editor = new Editor({
     Link.configure({
       defaultProtocol: 'https',
       shouldAutoLink: (url) => url.startsWith('https://'),
-    })
+    }),
+    Strike,
+    Underline,
   ],
   autofocus: "start",
   content: defaultSchema || '',
@@ -293,6 +299,20 @@ const quoteButtons = document.querySelectorAll('[editor-action="quote"]');
 for (const button of quoteButtons) {
   button.addEventListener('click', () => {
     editor.chain().focus().toggleBlockquote().run();
+  });
+}
+
+const strikethroughButtons = document.querySelectorAll('[editor-action="strikethrough"]');
+for (const button of strikethroughButtons) {
+  button.addEventListener('click', () => {
+    editor.chain().focus().toggleStrike().run();
+  });
+}
+
+const underlineButtons = document.querySelectorAll('[editor-action="underline"]');
+for (const button of underlineButtons) {
+  button.addEventListener('click', () => {
+    editor.chain().focus().toggleUnderline().run();
   });
 }
 
