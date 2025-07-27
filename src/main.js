@@ -22,6 +22,7 @@ import DragHandle from '@tiptap/extension-drag-handle'
 import Link from '@tiptap/extension-link'
 import Strike from '@tiptap/extension-strike'
 import Underline from '@tiptap/extension-underline'
+import { UndoRedo } from '@tiptap/extensions'
 
 
 const editorDiv = document.querySelector('#tiptap_editor');
@@ -203,6 +204,7 @@ const editor = new Editor({
     }),
     Strike,
     Underline,
+    UndoRedo,
   ],
   autofocus: "start",
   content: defaultSchema || '',
@@ -385,5 +387,19 @@ const alignJustifyButtons = document.querySelectorAll('[editor-action="align-jus
 for (const button of alignJustifyButtons) {
   button.addEventListener('click', () => {
     editor.chain().focus().setTextAlign('justify').run();
+  });
+}
+
+const undoButtons = document.querySelectorAll('[editor-action="undo"]');
+for (const button of undoButtons) {
+  button.addEventListener('click', () => {
+    editor.chain().focus().undo().run();
+  });
+}
+
+const redoButtons = document.querySelectorAll('[editor-action="redo"]');
+for (const button of redoButtons) {
+  button.addEventListener('click', () => {
+    editor.chain().focus().redo().run();
   });
 }
