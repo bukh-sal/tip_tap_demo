@@ -567,6 +567,27 @@ for (const picker of fontFamilyPickers) {
   });
 }
 
+const bulletListButtons = document.querySelectorAll('[editor-action="bullet-list"]');
+for (const button of bulletListButtons) {
+  button.addEventListener('click', () => {
+    editor.chain().focus().toggleBulletList().run();
+  });
+}
+
+const orderedListButtons = document.querySelectorAll('[editor-action="ordered-list"]');
+for (const button of orderedListButtons) {
+  button.addEventListener('click', () => {
+    editor.chain().focus().toggleOrderedList().run();
+  });
+}
+
+const tasksListButtons = document.querySelectorAll('[editor-action="tasks-list"]');
+for (const button of tasksListButtons) {
+  button.addEventListener('click', () => {
+    editor.chain().focus().toggleTaskList().run();
+  });
+}
+
 // Table menu actions
 const tableActionsIcons = {
   add: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>`,

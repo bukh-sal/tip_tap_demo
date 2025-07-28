@@ -255,6 +255,28 @@
     <button type="button" editor-action="strikethrough" class="px-1 py-1 text-black/65 text-sm rounded hover:bg-gray-200/70">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-strikethrough-icon lucide-strikethrough"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
     </button>
+
+    <span class="border border-r border-gray-300/70 py-3 mx-1"></span>
+    
+    <el-dropdown class="inline-block">
+      <button class="px-1 py-1 text-black/65 text-sm rounded hover:bg-gray-200/70">
+        <svg class="text-black/65 text-sm" data-slot="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-icon lucide-list"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>
+      </button>
+
+      <el-menu anchor="bottom center" popover class="origin-top-right mt-4 border border-gray-200 rounded-md bg-white/40 backdrop-blur-[2px] transition transition-discrete data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
+        <div class="py-1 px-1">
+          <button editor-action="bullet-list" class="block mx-1 rounded px-1 py-1 text-sm text-black/65 focus:bg-gray-200/50">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-icon lucide-list"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>
+          </button>
+          <button editor-action="ordered-list" class="block mx-1 rounded px-1 py-1 text-sm text-black/65 focus:bg-gray-200/50">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-ordered-icon lucide-list-ordered"><path d="M10 12h11"/><path d="M10 18h11"/><path d="M10 6h11"/><path d="M4 10h2"/><path d="M4 6h1v4"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+          </button>
+          <button editor-action="tasks-list" class="block mx-1 rounded px-1 py-1 text-sm text-black/65 focus:bg-gray-200/50">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-checks-icon lucide-list-checks"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+          </button>
+        </div>
+      </el-menu>
+    </el-dropdown>
     
     <span class="border border-r border-gray-300/70 py-3 mx-1"></span>
     
