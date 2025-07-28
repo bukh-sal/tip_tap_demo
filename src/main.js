@@ -271,6 +271,7 @@ function updateFormattingSelections(editor) {
 
 const editor = new Editor({
   element: editorDiv,
+  editable: true,
   extensions: [
     // CORE
     Document,
@@ -744,6 +745,11 @@ tableMenuDiv.addEventListener('click', handleTableMenuClick);
 
 // Show/hide and position the table menu
 function updateTableMenu(editor) {
+  if (!editor.options.editable) {
+    tableMenuDiv.style.display = 'none';
+    return;
+  }
+
   if (editor.isActive('table')) {
     // Find the DOM node for the current table
     const view = editor.view;
