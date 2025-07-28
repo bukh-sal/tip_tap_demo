@@ -566,3 +566,225 @@ for (const picker of fontFamilyPickers) {
     }
   });
 }
+
+// Table menu actions
+const tableActionsIcons = {
+  add: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>`,
+  delete: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z"/></svg>`,
+  header: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="6" rx="1"/><rect x="3" y="9" width="18" height="12" rx="1"/></svg>`
+};
+
+// Dropdown config for menu cleanliness
+const tableDropdowns = [
+  {
+    key: 'add',
+    label: 'Add',
+    icon: tableActionsIcons.add,
+    btnClass: 'toolbar-btn flex items-center gap-1 px-3 py-1 rounded-md border border-gray-200 bg-white hover:bg-gray-100 focus:bg-gray-200 text-sm font-medium shadow-sm transition',
+    menuClass: 'dropdown-menu absolute left-0 mt-2 min-w-[160px] bg-white border border-gray-200 rounded-md shadow-lg flex flex-col z-10 hidden',
+    items: [
+      { action: 'add-row-before', label: 'Row Above', icon: '⬆️', title: 'Add row above' },
+      { action: 'add-row-after', label: 'Row Below', icon: '⬇️', title: 'Add row below' },
+      { action: 'add-col-before', label: 'Col Left', icon: '⬅️', title: 'Add column left' },
+      { action: 'add-col-after', label: 'Col Right', icon: '➡️', title: 'Add column right' },
+    ]
+  },
+  {
+    key: 'delete',
+    label: 'Delete',
+    icon: tableActionsIcons.delete,
+    btnClass: 'toolbar-btn flex items-center gap-1 px-3 py-1 rounded-md border border-red-200 bg-white hover:bg-red-50 focus:bg-red-100 text-sm font-medium text-red-600 shadow-sm transition',
+    menuClass: 'dropdown-menu absolute left-0 mt-2 min-w-[160px] bg-white border border-red-200 rounded-md shadow-lg flex flex-col z-10 hidden',
+    items: [
+      { action: 'delete-row', label: 'Delete Row', icon: '🗑️', title: 'Delete row' },
+      { action: 'delete-col', label: 'Delete Col', icon: '🗑️', title: 'Delete column' },
+      { action: 'delete-table', label: 'Delete Table', icon: '🗑️', title: 'Delete table', danger: true },
+    ]
+  },
+  {
+    key: 'headers',
+    label: 'Headers',
+    icon: tableActionsIcons.header,
+    btnClass: 'toolbar-btn flex items-center gap-1 px-3 py-1 rounded-md border border-blue-200 bg-white hover:bg-blue-50 focus:bg-blue-100 text-sm font-medium text-blue-700 shadow-sm transition',
+    menuClass: 'dropdown-menu absolute left-0 mt-2 min-w-[160px] bg-white border border-blue-200 rounded-md shadow-lg flex flex-col z-10 hidden',
+    items: [
+      { action: 'toggle-header-row', label: 'Header Row', icon: '🔠', title: 'Toggle header row' },
+      { action: 'toggle-header-col', label: 'Header Col', icon: '🔠', title: 'Toggle header column' },
+    ]
+  }
+];
+
+// Utility to create a dropdown
+function createTableActionDropdown({ key, label, icon, btnClass, menuClass, items }) {
+  const dropdownDiv = document.createElement('div');
+  dropdownDiv.className = 'relative';
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = btnClass;
+  button.innerHTML = `${icon}<span>${label}</span>`;
+  button.setAttribute('data-dropdown', key);
+  dropdownDiv.appendChild(button);
+
+  const menu = document.createElement('div');
+  menu.className = menuClass;
+  menu.style.display = 'none';
+  items.forEach(btn => {
+    const itemBtn = document.createElement('button');
+    itemBtn.type = 'button';
+    itemBtn.innerHTML = `<span class="inline-block align-middle mr-2">${btn.icon}</span><span class="align-middle">${btn.label}</span>`;
+    itemBtn.title = btn.title;
+    itemBtn.className = `dropdown-item px-3 py-2 text-sm text-left rounded transition flex items-center ${btn.danger ? 'text-red-600 hover:bg-red-50' : 'hover:bg-gray-100'}`;
+    itemBtn.setAttribute('data-action', btn.action);
+    menu.appendChild(itemBtn);
+  });
+  dropdownDiv.appendChild(menu);
+  return { dropdownDiv, button, menu };
+}
+
+// Create the menu container
+const tableMenuDiv = document.createElement('div');
+tableMenuDiv.id = 'table-menu';
+tableMenuDiv.className = 'table-menu absolute bg-white/90 border border-gray-300 rounded-md shadow-xs flex flex-row gap-2 p-2 z-[2100]';
+tableMenuDiv.style.display = 'none';
+tableMenuDiv.style.position = 'absolute';
+document.body.appendChild(tableMenuDiv);
+
+// Store references for dropdown toggling
+const dropdownRefs = {};
+tableDropdowns.forEach(cfg => {
+  const { dropdownDiv, button, menu } = createTableActionDropdown(cfg);
+  tableMenuDiv.appendChild(dropdownDiv);
+  dropdownRefs[cfg.key] = { button, menu, dropdownDiv };
+});
+
+// Dropdown toggle
+Object.entries(dropdownRefs).forEach(([key, ref]) => {
+  ref.button.addEventListener('click', (e) => {
+    e.stopPropagation();
+    Object.entries(dropdownRefs).forEach(([k, r]) => {
+      r.menu.style.display = (k === key && r.menu.style.display === 'none') ? 'flex' : 'none';
+    });
+  });
+});
+document.addEventListener('click', (e) => {
+  Object.values(dropdownRefs).forEach(ref => {
+    if (!ref.dropdownDiv.contains(e.target)) {
+      ref.menu.style.display = 'none';
+    }
+  });
+});
+
+// Table menu actions
+function handleTableMenuClick(e) {
+  const btn = e.target.closest('button[data-action]');
+  if (!btn) return;
+  const action = btn.getAttribute('data-action');
+  const closeMenu = () => { tableMenuDiv.style.display = 'none'; };
+  switch (action) {
+    case 'add-row-before':
+      editor.chain().focus().addRowBefore().run();
+      closeMenu();
+      break;
+    case 'add-row-after':
+      editor.chain().focus().addRowAfter().run();
+      closeMenu();
+      break;
+    case 'delete-row':
+      editor.chain().focus().deleteRow().run();
+      closeMenu();
+      break;
+    case 'add-col-before':
+      editor.chain().focus().addColumnBefore().run();
+      closeMenu();
+      break;
+    case 'add-col-after':
+      editor.chain().focus().addColumnAfter().run();
+      closeMenu();
+      break;
+    case 'delete-col':
+      editor.chain().focus().deleteColumn().run();
+      closeMenu();
+      break;
+    case 'toggle-header-row':
+      editor.chain().focus().toggleHeaderRow().run();
+      closeMenu();
+      break;
+    case 'toggle-header-col':
+      editor.chain().focus().toggleHeaderColumn().run();
+      closeMenu();
+      break;
+    case 'delete-table':
+      editor.chain().focus().deleteTable().run();
+      closeMenu();
+      break;
+  }
+}
+tableMenuDiv.addEventListener('click', handleTableMenuClick);
+
+// Show/hide and position the table menu
+function updateTableMenu(editor) {
+  if (editor.isActive('table')) {
+    // Find the DOM node for the current table
+    const view = editor.view;
+    let dom = null;
+    // Find the table node that contains the selection
+    const selection = view.state.selection;
+    const anchor = selection.$anchor ? selection.$anchor : selection.$from;
+    let node = anchor.node();
+    while (node && node.type && node.type.name !== 'table') {
+      node = node.parent;
+    }
+    if (node && node.type && node.type.name === 'table') {
+      // Find the corresponding DOM node
+      view.dom.querySelectorAll('table').forEach(table => {
+        if (!dom && table.offsetParent !== null) {
+          dom = table;
+        }
+      });
+    } else {
+      // fallback: pick first visible table
+      view.dom.querySelectorAll('table').forEach(table => {
+        if (!dom && table.offsetParent !== null) {
+          dom = table;
+        }
+      });
+    }
+    if (dom) {
+      const rect = dom.getBoundingClientRect();
+      // Position menu above the table, centered horizontally
+      const menuRect = tableMenuDiv.getBoundingClientRect();
+      const left = rect.left + window.scrollX + (rect.width - menuRect.width) / 2;
+      const top = rect.top + window.scrollY - menuRect.height - 8;
+      tableMenuDiv.style.left = `${Math.max(left, 8)}px`;
+      tableMenuDiv.style.top = `${Math.max(top, 8)}px`;
+      tableMenuDiv.style.display = 'flex';
+    } else {
+      tableMenuDiv.style.display = 'none';
+    }
+  } else {
+    tableMenuDiv.style.display = 'none';
+  }
+}
+
+
+// --- Show menu on cell hover/focus ---
+editorDiv.addEventListener('mouseover', e => {
+  const cell = e.target.closest('td,th');
+  if (cell && editor.isActive('table')) {
+    updateTableMenu(editor);
+  }
+});
+editorDiv.addEventListener('mouseleave', e => {
+  if (!e.relatedTarget || !e.relatedTarget.closest('#table-menu')) {
+    tableMenuDiv.style.display = 'none';
+  }
+});
+
+
+// Update menu on selection and content changes
+editor.on('selectionUpdate', ({ editor }) => {
+  updateTableMenu(editor);
+});
+editor.on('update', ({ editor }) => {
+  updateTableMenu(editor);
+});
