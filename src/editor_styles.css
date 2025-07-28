@@ -24,7 +24,7 @@
     caret-color: var(--tt-cursor-color)
 }
 
-.tiptap.ProseMirror p:not(:first-child) {
+.tiptap.ProseMirror p {
     font-size: 1.2rem;
     line-height: 1.6;
     font-weight: 400;
