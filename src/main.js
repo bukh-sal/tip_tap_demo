@@ -388,14 +388,14 @@ function decrementFontSize() {
 
 // bind CTRL + [ to decrement font size
 document.addEventListener('keydown', (event) => {
-  if (event.ctrlKey && event.key === '[') {
+  if (event.ctrlKey && event.code === 'BracketLeft') {
     decrementFontSize();
   }
 });
 
 // bind CTRL + ] to increment font size
 document.addEventListener('keydown', (event) => {
-  if (event.ctrlKey && event.key === ']') {
+  if (event.ctrlKey && event.code === 'BracketRight') {
     incrimentFontSize();
   }
 });
