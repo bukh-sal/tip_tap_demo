@@ -5,6 +5,8 @@ class TiptapEditor extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.editor = null;
+        this.autoSaveTimeGap = 1000;
+        this.autoSaveDebounce = null;
     }
 
     connectedCallback() {
@@ -575,29 +577,51 @@ class TiptapEditor extends HTMLElement {
     renderShell() {
         this.shadowRoot.innerHTML += `
             <style>
-            .editor-container {
-                position: relative;
-            }
-            @media (min-width: 768px) {
                 .editor-container {
-                    max-height: 80vh;
-                    overflow-y: auto;
-                    border-bottom: 1px solid var(--tt-gray-light-a-200);
+                    position: relative;
                 }
-            }
+                @media (min-width: 768px) {
+                    .editor-container {
+                        max-height: 80vh;
+                        overflow-y: auto;
+                        border-bottom: 1px solid var(--tt-gray-light-a-200);
+                    }
+                }
             </style>
-            <div class="editor-container"></div>
+            <div class="editor-container relative">
+
+                <div class="tiptap_editor"></div>
+            </div>
         `;
     }
 
     async loadContent() {
-        // Load content from the server or any other source
-        // For now, we will use a placeholder
-        this.content = '<p>Welcome to the Tiptap Editor!</p>';
+        const defaultContent = '<p>Welcome to the Tiptap Editor!</p>';
+        if (localStorage.getItem('tiptap-editor-content')) {
+            try {
+                this.content = JSON.parse(localStorage.getItem('tiptap-editor-content'));
+            } catch (e) {
+                console.error('Failed to parse saved content, using default content.', e);
+                this.content = defaultContent;
+            }
+        }
+    }
+
+    autoSave() {
+        if (this.autoSaveDebounce) {
+            clearTimeout(this.autoSaveDebounce);
+        }
+        this.autoSaveDebounce = setTimeout(() => {
+            if (this.editor) {
+                const content = this.editor.getJSON();
+                // save to localStorage
+                localStorage.setItem('tiptap-editor-content', JSON.stringify(content));
+            }
+        }, this.autoSaveTimeGap);
     }
 
     setupEditor() {
-        const container = this.shadowRoot.querySelector('.editor-container');
+        const container = this.shadowRoot.querySelector('.tiptap_editor');
         this.editor = get_editor({
             element: container,
             editable: true,
@@ -607,7 +631,7 @@ class TiptapEditor extends HTMLElement {
                 
             },
             onSelectionUpdate: ({ editor }) => {
-                
+                this.autoSave();
             },
         });
 
