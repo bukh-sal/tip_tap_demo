@@ -722,6 +722,42 @@ class TiptapEditor extends HTMLElement {
                     outline: none;
                     border-color: transparent;
                 }
+                .color-swatch-grid {
+                    display: grid;
+                    grid-template-columns: repeat(5, 1fr);
+                    grid-gap: 0.2rem;
+                }
+                .color-swatch {
+                    width: 25px;
+                    height: 25px;
+                    border: 1px solid #d1d5dc;
+                    border-radius: 1.25rem;
+                    cursor: pointer;
+                    transition: transform 0.2s ease-in-out;
+                }
+                .color-swatch:hover {
+                    border: 1px solid #a4a4a4;
+                    transform: translateY(-1px);
+                }
+                #top-bar-text-color-picker {
+                    anchor-name: --top_bar_color_picker_anchor;
+                }
+                #text-color-picker {
+                    margin: 0;
+                    margin-top: 10px;
+                    padding: 0.5rem;
+                    border-radius: 0.25rem;
+                    display: none;
+                    position-anchor: --top_bar_color_picker_anchor;
+                    top: anchor(--top_bar_color_picker_anchor bottom);
+                    left: anchor(--top_bar_color_picker_anchor start);
+                    background-color: rgba(255, 255, 255, 0.5);
+                    border: 1px solid #d1d5dc;
+                    backdrop-filter: blur(2px);
+                }
+                #text-color-picker:popover-open {
+                    display: block;
+                }
             </style>
         `;
     }
@@ -756,122 +792,155 @@ class TiptapEditor extends HTMLElement {
                     }
                 }
                 </style>
-            <div class="editor-container relative">
-                <div class="top-bar-container">
-                    <div class="top-bar">
-                        <button class="editor-button" title="Bold" editor-action="undo">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo2-icon lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
-                        </button>
-                        <button class="editor-button" title="Bold" editor-action="redo">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-redo2-icon lucide-redo-2"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5A5.5 5.5 0 0 0 4 14.5A5.5 5.5 0 0 0 9.5 20H13"/></svg>
-                        </button>
+                <div class="editor-container relative">
+                    <div class="top-bar-container">
+                        <div class="top-bar">
+                            <button class="editor-button" title="Bold" editor-action="undo">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo2-icon lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
+                            </button>
+                            <button class="editor-button" title="Bold" editor-action="redo">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-redo2-icon lucide-redo-2"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5A5.5 5.5 0 0 0 4 14.5A5.5 5.5 0 0 0 9.5 20H13"/></svg>
+                            </button>
 
-                        <span class="buttons-separator"></span>
+                            <span class="buttons-separator"></span>
 
-                        <select editor-action="select-font-family" class="editor-select">
-                            <option value="" selected>Default Font</option>
-                            <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">System UI</option>
-                            <option value="'IBM Plex Sans Arabic', monospace;">IBM Plex Sans</option>
-                            <option value="'Noto Kufi Arabic', sans-serif">Noto Kufi</option>
-                            <option value="'Noto Sans Arabic', sans-serif">Noto Sans</option>
-                            <option value="'Cascadia Code', sans-serif;">Cascadia Code</option>
-                            <option value="'Intel One Mono', monospace;">Intel One Mono</option>
-                            <option value="Arial, sans-serif">Arial</option>
-                            <option value="sans-serif">Sans-serif</option>
-                            <option value="serif">Serif</option>
-                            <option value="'Inter', sans-serif">Inter</option>
-                            <option value="'Rubik', sans-serif;">Rubik</option>
-                            <option value="'Montserrat', sans-serif;">Montserrat</option>
-                            <option value="'Roboto', sans-serif;">Roboto</option>
-                            <option value="'Open Sans', sans-serif;">Open Sans</option>
-                            <option value="'Ubuntu', sans-serif;">Ubuntu</option>
-                            <option value="'Times New Roman', Times, serif">Times New Roman</option>
-                            <option value="monospace">Monospace</option>
-                        </select>
+                            <select editor-action="select-font-family" class="editor-select">
+                                <option value="" selected>Default Font</option>
+                                <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">System UI</option>
+                                <option value="'IBM Plex Sans Arabic', monospace;">IBM Plex Sans</option>
+                                <option value="'Noto Kufi Arabic', sans-serif">Noto Kufi</option>
+                                <option value="'Noto Sans Arabic', sans-serif">Noto Sans</option>
+                                <option value="'Cascadia Code', sans-serif;">Cascadia Code</option>
+                                <option value="'Intel One Mono', monospace;">Intel One Mono</option>
+                                <option value="Arial, sans-serif">Arial</option>
+                                <option value="sans-serif">Sans-serif</option>
+                                <option value="serif">Serif</option>
+                                <option value="'Inter', sans-serif">Inter</option>
+                                <option value="'Rubik', sans-serif;">Rubik</option>
+                                <option value="'Montserrat', sans-serif;">Montserrat</option>
+                                <option value="'Roboto', sans-serif;">Roboto</option>
+                                <option value="'Open Sans', sans-serif;">Open Sans</option>
+                                <option value="'Ubuntu', sans-serif;">Ubuntu</option>
+                                <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                                <option value="monospace">Monospace</option>
+                            </select>
 
+                            <select editor-action="select-font-size" class="editor-select">
+                                <option editor-action="clear-font-size" value="">Default Size</option>
+                                <option editor-action="set-heading" value="1">Heading 1</option>
+                                <option editor-action="set-heading" value="2">Heading 2</option>
+                                <option editor-action="set-heading" value="3">Heading 3</option>
+                                <option editor-action="set-heading" value="4">Heading 4</option>
+                                <option editor-action="set-heading" value="5">Heading 5</option>
+                                <option editor-action="set-heading" value="6">Heading 6</option>
+                                <option editor-action="set-pixel-size" value="12px">12px</option>
+                                <option editor-action="set-pixel-size" value="14px">14px</option>
+                                <option editor-action="set-pixel-size" value="16px">16px</option>
+                                <option editor-action="set-pixel-size" value="18px">18px</option>
+                                <option editor-action="set-pixel-size" value="20px">20px</option>
+                                <option editor-action="set-pixel-size" value="24px">24px</option>
+                                <option editor-action="set-pixel-size" value="32px">32px</option>
+                                <option editor-action="set-pixel-size" value="36px">36px</option>
+                                <option editor-action="set-pixel-size" value="40px">40px</option>
+                                <option editor-action="set-pixel-size" value="48px">48px</option>
+                                <option editor-action="set-pixel-size" value="56px">56px</option>
+                                <option editor-action="set-pixel-size" value="64px">64px</option>
+                                <option editor-action="set-pixel-size" value="72px">72px</option>
+                                <option editor-action="set-pixel-size" value="80px">80px</option>
+                                <option editor-action="set-pixel-size" value="96px">96px</option>
+                                <option editor-action="set-pixel-size" value="128px">128px</option>
+                                <option editor-action="set-pixel-size" value="160px">160px</option>
+                            </select>
 
-                        <select editor-action="select-font-size" class="editor-select">
-                            <option editor-action="clear-font-size" value="">Default Size</option>
-                            <option editor-action="set-heading" value="1">Heading 1</option>
-                            <option editor-action="set-heading" value="2">Heading 2</option>
-                            <option editor-action="set-heading" value="3">Heading 3</option>
-                            <option editor-action="set-heading" value="4">Heading 4</option>
-                            <option editor-action="set-heading" value="5">Heading 5</option>
-                            <option editor-action="set-heading" value="6">Heading 6</option>
-                            <option editor-action="set-pixel-size" value="12px">12px</option>
-                            <option editor-action="set-pixel-size" value="14px">14px</option>
-                            <option editor-action="set-pixel-size" value="16px">16px</option>
-                            <option editor-action="set-pixel-size" value="18px">18px</option>
-                            <option editor-action="set-pixel-size" value="20px">20px</option>
-                            <option editor-action="set-pixel-size" value="24px">24px</option>
-                            <option editor-action="set-pixel-size" value="32px">32px</option>
-                            <option editor-action="set-pixel-size" value="36px">36px</option>
-                            <option editor-action="set-pixel-size" value="40px">40px</option>
-                            <option editor-action="set-pixel-size" value="48px">48px</option>
-                            <option editor-action="set-pixel-size" value="56px">56px</option>
-                            <option editor-action="set-pixel-size" value="64px">64px</option>
-                            <option editor-action="set-pixel-size" value="72px">72px</option>
-                            <option editor-action="set-pixel-size" value="80px">80px</option>
-                            <option editor-action="set-pixel-size" value="96px">96px</option>
-                            <option editor-action="set-pixel-size" value="128px">128px</option>
-                            <option editor-action="set-pixel-size" value="160px">160px</option>
-                        </select>
+                            <button id="top-bar-text-color-picker" popovertarget="text-color-picker" class="editor-button" title="Text Color">
+                                <span style="display: flex; align-items: between;">
+                                    <div class="current-color" style="background-color: #000000; width: 18px; height: 18px; border-radius:0.2rem; margin-inline-end:7px;"></div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
 
+                            <span class="buttons-separator"></span>
 
-                        <span class="buttons-separator"></span>
+                            <button type="button" editor-action="bold" class="editor-button" title="bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bold-icon lucide-bold"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"></path></svg>
+                            </button>
 
+                            <button type="button" editor-action="italic" class="editor-button" title="bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-italic-icon lucide-italic"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg>
+                            </button>
 
-                        <button type="button" editor-action="bold" class="editor-button" title="bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bold-icon lucide-bold"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"></path></svg>
-                        </button>
+                            <button type="button" editor-action="underline" class="editor-button" title="bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-underline-icon lucide-underline"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>
+                            </button>
 
-                        <button type="button" editor-action="italic" class="editor-button" title="bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-italic-icon lucide-italic"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg>
-                        </button>
+                            <button type="button" editor-action="strikethrough" class="editor-button" title="bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-strikethrough-icon lucide-strikethrough"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
+                            </button>
 
-                        <button type="button" editor-action="underline" class="editor-button" title="bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-underline-icon lucide-underline"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>
-                        </button>
+                            <span class="buttons-separator"></span>
 
-                        <button type="button" editor-action="strikethrough" class="editor-button" title="bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-strikethrough-icon lucide-strikethrough"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
-                        </button>
+                            <button type="button" editor-action="quote" class="editor-button" title="bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-quote-icon lucide-quote"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
+                            </button>
 
-                        <span class="buttons-separator"></span>
+                            <button type="button" editor-action="code" class="editor-button" title="bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-icon lucide-code"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>
+                            </button>
 
-                        <button type="button" editor-action="quote" class="editor-button" title="bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-quote-icon lucide-quote"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
-                        </button>
+                            <button type="button" editor-action="link" class="editor-button" title="bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link-icon lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                            </button>
 
-                        <button type="button" editor-action="code" class="editor-button" title="bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-icon lucide-code"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>
-                        </button>
+                            <span class="buttons-separator"></span>
 
-                        <button type="button" editor-action="link" class="editor-button" title="bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link-icon lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                        </button>
+                            <button type="button" editor-action="align-left" class="editor-button" title="bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-left-icon lucide-align-left"><path d="M15 12H3"/><path d="M17 18H3"/><path d="M21 6H3"/></svg>
+                            </button>
 
-                        <span class="buttons-separator"></span>
+                            <button type="button" editor-action="align-center" class="editor-button" title="bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-center-icon lucide-align-center"><path d="M17 12H7"/><path d="M19 18H5"/><path d="M21 6H3"/></svg>
+                            </button>
 
+                            <button type="button" editor-action="align-right" class="editor-button" title="bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-right-icon lucide-align-right"><path d="M21 12H9"/><path d="M21 18H7"/><path d="M21 6H3"/></svg>
+                            </button>
 
-                        <button type="button" editor-action="align-left" class="editor-button" title="bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-left-icon lucide-align-left"><path d="M15 12H3"/><path d="M17 18H3"/><path d="M21 6H3"/></svg>
-                        </button>
+                            <button type="button" editor-action="align-justify" class="editor-button" title="bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify-icon lucide-align-justify"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>
+                            </button>
 
-                        <button type="button" editor-action="align-center" class="editor-button" title="bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-center-icon lucide-align-center"><path d="M17 12H7"/><path d="M19 18H5"/><path d="M21 6H3"/></svg>
-                        </button>
+                        </div>
 
-                        <button type="button" editor-action="align-right" class="editor-button" title="bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-right-icon lucide-align-right"><path d="M21 12H9"/><path d="M21 18H7"/><path d="M21 6H3"/></svg>
-                        </button>
-
-                        <button type="button" editor-action="align-justify" class="editor-button" title="bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify-icon lucide-align-justify"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>
-                        </button>
+                        <div id="text-color-picker" popover>
+                            <div class="color-swatch-grid">
+                                <button class="color-swatch" style="background-color: #000000;" data-color="#000000"></button>
+                                <button class="color-swatch" style="background-color: #404040;" data-color="#404040"></button>
+                                <button class="color-swatch" style="background-color: #808080;" data-color="#808080"></button>
+                                <button class="color-swatch" style="background-color: #c0c0c0;" data-color="#c0c0c0"></button>
+                                <button class="color-swatch" style="background-color: #e0e0e0;" data-color="#e0e0e0"></button>
+                                <button class="color-swatch" style="background-color: #ffffff;" data-color="#ffffff"></button>
+                                <button class="color-swatch" style="background-color: #ff0000;" data-color="#ff0000"></button>
+                                <button class="color-swatch" style="background-color: #00ff00;" data-color="#00ff00"></button>
+                                <button class="color-swatch" style="background-color: #0000ff;" data-color="#0000ff"></button>
+                                <button class="color-swatch" style="background-color: #ffff00;" data-color="#ffff00"></button>
+                                <button class="color-swatch" style="background-color: #ff00ff;" data-color="#ff00ff"></button>
+                                <button class="color-swatch" style="background-color: #00ffff;" data-color="#00ffff"></button>
+                                <button class="color-swatch" style="background-color: #0078d4;" data-color="#0078d4"></button>
+                                <button class="color-swatch" style="background-color: #107c41;" data-color="#107c41"></button>
+                                <button class="color-swatch" style="background-color: #d83b01;" data-color="#d83b01"></button>
+                                <button class="color-swatch" style="background-color: #f2c811;" data-color="#f2c811"></button>
+                                <button class="color-swatch" style="background-color: #742774;" data-color="#742774"></button>
+                                <button class="color-swatch" style="background-color: #00a99d;" data-color="#00a99d"></button>
+                                <button class="color-swatch" style="background-color: #c43e1c;" data-color="#c43e1c"></button>
+                                <button class="color-swatch" style="background-color: #077568;" data-color="#077568"></button>
+                                <button class="color-swatch" style="background-color: #bc1948;" data-color="#bc1948"></button>
+                                <button class="color-swatch" style="background-color: #49aae5;" data-color="#49aae5"></button>
+                                <button class="color-swatch" style="background-color: #853d90;" data-color="#853d90"></button>
+                                <button class="color-swatch" style="background-color: #527f13;" data-color="#527f13"></button>
+                            </div>
+                        </div>
 
                     </div>
-                </div>
 
                 <div class="tiptap-editor"></div>
             </div>
@@ -1145,71 +1214,6 @@ class TiptapEditor extends HTMLElement {
     updateFormattingSelections() {
         const textStyleState = this.getTextStyleState();
         const activeButtonClass = 'active';
-
-        // const boldButtons = this.shadowRoot.querySelectorAll('button[editor-action="bold"]');
-        // for (const btn of boldButtons) {
-        //     btn.classList.remove(activeButtonClass);
-        //     if (textStyleState.bold) {
-        //         btn.classList.add(activeButtonClass);
-        //     }
-        // }
-
-        // const italicButtons = this.shadowRoot.querySelectorAll('button[editor-action="italic"]');
-        // for (const btn of italicButtons) {
-        //     btn.classList.remove(activeButtonClass);
-        //     if (textStyleState.italic) {
-        //         btn.classList.add(activeButtonClass);
-        //     }
-        // }
-
-        // const underlineButtons = this.shadowRoot.querySelectorAll('button[editor-action="underline"]');
-        // for (const btn of underlineButtons) {
-        //     btn.classList.remove(activeButtonClass);
-        //     if (textStyleState.underline) {
-        //         btn.classList.add(activeButtonClass);
-        //     }
-        // }
-
-        // const strikeButtons = this.shadowRoot.querySelectorAll('button[editor-action="strikethrough"]');
-        // for (const btn of strikeButtons) {
-        //     btn.classList.remove(activeButtonClass);
-        //     if (textStyleState.strike) {
-        //         btn.classList.add(activeButtonClass);
-        //     }
-        // }
-
-
-        // const alignLeftButtons = this.shadowRoot.querySelectorAll('button[editor-action="align-left"]');
-        // for (const btn of alignLeftButtons) {
-        //     btn.classList.remove(activeButtonClass);
-        //     if (textStyleState.textAlign == 'left') {
-        //     btn.classList.add(activeButtonClass);
-        //     }
-        // }
-
-        // const alignCenterButtons = this.shadowRoot.querySelectorAll('button[editor-action="align-center"]');
-        // for (const btn of alignCenterButtons) {
-        //     btn.classList.remove(activeButtonClass);
-        //     if (textStyleState.textAlign == 'center') {
-        //     btn.classList.add(activeButtonClass);
-        //     }
-        // }
-
-        // const alignRightButtons = this.shadowRoot.querySelectorAll('button[editor-action="align-right"]');
-        // for (const btn of alignRightButtons) {
-        //     btn.classList.remove(activeButtonClass);
-        //     if (textStyleState.textAlign == 'right') {
-        //     btn.classList.add(activeButtonClass);
-        //     }
-        // }
-
-        // const alignJustifyButtons = this.shadowRoot.querySelectorAll('button[editor-action="align-justify"]');
-        // for (const btn of alignJustifyButtons) {
-        //     btn.classList.remove(activeButtonClass);
-        //     if (textStyleState.textAlign == 'justify') {
-        //     btn.classList.add(activeButtonClass);
-        //     }
-        // }
 
         const togglableActions = [
             'bold',
