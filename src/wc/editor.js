@@ -9,6 +9,8 @@ import Paragraph from '@tiptap/extension-paragraph'
 import BlockQuote from '@tiptap/extension-blockquote'
 import { BulletList, ListItem, OrderedList  } from '@tiptap/extension-list'
 import CodeBlock from '@tiptap/extension-code-block'
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import { all, createLowlight } from 'lowlight'
 import Heading from '@tiptap/extension-heading'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import Image from '@tiptap/extension-image'
@@ -28,6 +30,7 @@ import Strike from '@tiptap/extension-strike'
 import Underline from '@tiptap/extension-underline'
 import { UndoRedo } from '@tiptap/extensions'
 
+const lowlight = createLowlight(all)
 
 export function get_editor({ element, editable=true, content='', parentDOM=document, onUpdate=()=>{}, onSelectionUpdate=()=>{}, bubbleMenuConfig = {}} = {}) {
     if (!element) {
@@ -47,7 +50,8 @@ export function get_editor({ element, editable=true, content='', parentDOM=docum
         BulletList,
         ListItem,
         OrderedList,
-        CodeBlock.configure({
+        CodeBlockLowlight.configure({
+            lowlight,
             HTMLAttributes: {
                 spellcheck: false,
             },
