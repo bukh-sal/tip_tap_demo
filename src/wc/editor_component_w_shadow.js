@@ -768,7 +768,7 @@ class TiptapEditor extends HTMLElement {
 
                         <span class="buttons-separator"></span>
 
-                        <select editor-action="select-font-size" class="editor-select">
+                        <select editor-action="select-font-family" class="editor-select">
                             <option value="" selected>Default Font</option>
                             <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">System UI</option>
                             <option value="'IBM Plex Sans Arabic', monospace;">IBM Plex Sans</option>
@@ -911,16 +911,367 @@ class TiptapEditor extends HTMLElement {
             content: this.content,
             parentDOM: this.shadowRoot,
             onUpdate: ({ editor }) => {
-                
+                this.updateFormattingSelections();
             },
             onSelectionUpdate: ({ editor }) => {
                 this.autoSave();
+                this.updateFormattingSelections();
             },
         });
 
         if (!this.editor) {
             console.error('Failed to initialize the editor');
         }
+        this.bindControls();
+    }
+
+    getTextAlignment() {
+        const attributes = this.editor.getAttributes('paragraph') || this.editor.getAttributes('heading');
+        return attributes.textAlign || 'left';
+    }
+
+    getTextStyleState() {
+        const textAlign = this.getTextAlignment();
+        return {
+            bold: this.editor.isActive('bold') || null,
+            italic: this.editor.isActive('italic') || null,
+            underline: this.editor.isActive('underline') || null,
+            strike: this.editor.isActive('strike') || null,
+            code: this.editor.isActive('code') || null,
+            fontSize: this.editor.getAttributes('textStyle').fontSize || null,
+            color: this.editor.getAttributes('textStyle').color || null,
+            backgroundColor: this.editor.getAttributes('textStyle').backgroundColor || null,
+            fontFamily: this.editor.getAttributes('textStyle').fontFamily || null,
+            quote: this.editor.isActive('quote') || null,
+            textAlign: textAlign,
+        };
+    }
+
+    bindControls() {
+        this.bindKeyboardShortcuts();
+
+        const addImageButton = this.shadowRoot.querySelectorAll('[editor-action="add-image"]');
+        for (const button of addImageButton) {
+          button.addEventListener('click', () => {
+            const imageUrl = prompt('Enter image URL:');
+            if (imageUrl) {
+              this.editor.chain().focus().setImage({ src: imageUrl }).run();
+            }
+          });
+        }
+
+        const addTableButtons = this.shadowRoot.querySelectorAll('[editor-action="add-table"]');
+        for (const button of addTableButtons) {
+          button.addEventListener('click', () => {
+            const rows = parseInt(prompt('Enter number of rows:', '3'));
+            const cols = parseInt(prompt('Enter number of columns:', '3'));
+            if (!isNaN(rows) && !isNaN(cols) && rows > 0 && cols > 0) {
+              this.editor.chain().focus().insertTable({ rows, cols, withHeaderRow: true }).run();
+            }
+          });
+        }
+
+        const boldButtons = this.shadowRoot.querySelectorAll('[editor-action="bold"]');
+        for (const button of boldButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().toggleBold().run();
+          });
+        }
+
+        const italicButtons = this.shadowRoot.querySelectorAll('[editor-action="italic"]');
+        for (const button of italicButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().toggleItalic().run();
+          });
+        }
+
+        const quoteButtons = this.shadowRoot.querySelectorAll('[editor-action="quote"]');
+        for (const button of quoteButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().toggleBlockquote().run();
+          });
+        }
+
+        const strikethroughButtons = this.shadowRoot.querySelectorAll('[editor-action="strikethrough"]');
+        for (const button of strikethroughButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().toggleStrike().run();
+          });
+        }
+
+        const underlineButtons = this.shadowRoot.querySelectorAll('[editor-action="underline"]');
+        for (const button of underlineButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().toggleUnderline().run();
+          });
+        }
+
+        const codeButtons = this.shadowRoot.querySelectorAll('[editor-action="code"]');
+        for (const button of codeButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().toggleCodeBlock().run();
+          });
+        }
+
+        const linkButtons = this.shadowRoot.querySelectorAll('[editor-action="link"]');
+        for (const button of linkButtons) {
+          button.addEventListener('click', () => {
+            const linkUrl = prompt('Enter link URL:');
+            if (linkUrl) {
+              this.editor.chain().focus().setLink({ href: linkUrl }).run();
+            }
+          });
+        }
+
+        const fontSizeSelects = this.shadowRoot.querySelectorAll('[editor-action="select-font-size"]');
+        for (const select of fontSizeSelects) {
+          // we have 3 types of editor actions for the options (clear-font-size, set-heading, set-pixel-size)
+          select.addEventListener('change', (event) => {
+            const selectedOption = event.target.options[event.target.selectedIndex];
+            const actionType = selectedOption.getAttribute('editor-action');
+            if (actionType === 'clear-font-size') {
+                this.editor.chain().focus().setNode('paragraph').run();
+                this.editor.chain().focus().unsetFontSize().run();
+            }
+            else if (actionType === 'set-pixel-size') {
+              this.editor.chain().focus().setNode('paragraph').run();
+              this.editor.chain().focus().setFontSize(selectedOption.value).run();
+            }
+            else if (actionType === 'set-heading') {
+              this.editor.chain().focus().unsetFontSize().run();
+              this.editor.chain().focus().setHeading({ level: parseInt(selectedOption.value) }).run();
+            }
+          });
+        }
+
+        const alignLeftButtons = this.shadowRoot.querySelectorAll('[editor-action="align-left"]');
+        for (const button of alignLeftButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().setTextAlign('left').run();
+          });
+        }
+
+        const alignCenterButtons = this.shadowRoot.querySelectorAll('[editor-action="align-center"]');
+        for (const button of alignCenterButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().setTextAlign('center').run();
+          });
+        }
+
+        const alignRightButtons = this.shadowRoot.querySelectorAll('[editor-action="align-right"]');
+        for (const button of alignRightButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().setTextAlign('right').run();
+          });
+        }
+
+        const alignJustifyButtons = this.shadowRoot.querySelectorAll('[editor-action="align-justify"]');
+        for (const button of alignJustifyButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().setTextAlign('justify').run();
+          });
+        }
+
+        const undoButtons = this.shadowRoot.querySelectorAll('[editor-action="undo"]');
+        for (const button of undoButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().undo().run();
+          });
+        }
+
+        const redoButtons = this.shadowRoot.querySelectorAll('[editor-action="redo"]');
+        for (const button of redoButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().redo().run();
+          });
+        }
+
+        const colorChoices = this.shadowRoot.querySelectorAll('.color-swatch');
+        for (const colorChoice of colorChoices) {
+          colorChoice.addEventListener('click', () => {
+            // data-color
+            const color = colorChoice.dataset.color;
+            this.editor.chain().focus().setColor(color).run();
+          });
+        }
+
+        const customColorPickers = this.shadowRoot.querySelectorAll('.custom-color-picker');
+        for (const picker of customColorPickers) {
+          picker.addEventListener('input', (event) => {
+            const color = event.target.value;
+            this.editor.chain().focus().setColor(color).run();
+          });
+        }
+
+        const fontFamilyPickers = this.shadowRoot.querySelectorAll('[editor-action="select-font-family"]');
+        for (const picker of fontFamilyPickers) {
+          picker.addEventListener('change', (event) => {
+            const fontFamily = event.target.value;
+            if (fontFamily) {
+              this.editor.chain().focus().setFontFamily(fontFamily).run();
+            } else {
+              this.editor.chain().focus().unsetFontFamily().run();
+            }
+          });
+        }
+
+        const bulletListButtons = this.shadowRoot.querySelectorAll('[editor-action="bullet-list"]');
+        for (const button of bulletListButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().toggleBulletList().run();
+          });
+        }
+
+        const orderedListButtons = this.shadowRoot.querySelectorAll('[editor-action="ordered-list"]');
+        for (const button of orderedListButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().toggleOrderedList().run();
+          });
+        }
+
+        const tasksListButtons = this.shadowRoot.querySelectorAll('[editor-action="tasks-list"]');
+        for (const button of tasksListButtons) {
+          button.addEventListener('click', () => {
+            this.editor.chain().focus().toggleTaskList().run();
+          });
+        }
+        
+    }
+
+    bindKeyboardShortcuts() {
+
+    }
+
+    updateFormattingSelections() {
+        const textStyleState = this.getTextStyleState();
+        const activeButtonClass = 'active';
+
+        // const boldButtons = this.shadowRoot.querySelectorAll('button[editor-action="bold"]');
+        // for (const btn of boldButtons) {
+        //     btn.classList.remove(activeButtonClass);
+        //     if (textStyleState.bold) {
+        //         btn.classList.add(activeButtonClass);
+        //     }
+        // }
+
+        // const italicButtons = this.shadowRoot.querySelectorAll('button[editor-action="italic"]');
+        // for (const btn of italicButtons) {
+        //     btn.classList.remove(activeButtonClass);
+        //     if (textStyleState.italic) {
+        //         btn.classList.add(activeButtonClass);
+        //     }
+        // }
+
+        // const underlineButtons = this.shadowRoot.querySelectorAll('button[editor-action="underline"]');
+        // for (const btn of underlineButtons) {
+        //     btn.classList.remove(activeButtonClass);
+        //     if (textStyleState.underline) {
+        //         btn.classList.add(activeButtonClass);
+        //     }
+        // }
+
+        // const strikeButtons = this.shadowRoot.querySelectorAll('button[editor-action="strikethrough"]');
+        // for (const btn of strikeButtons) {
+        //     btn.classList.remove(activeButtonClass);
+        //     if (textStyleState.strike) {
+        //         btn.classList.add(activeButtonClass);
+        //     }
+        // }
+
+
+        // const alignLeftButtons = this.shadowRoot.querySelectorAll('button[editor-action="align-left"]');
+        // for (const btn of alignLeftButtons) {
+        //     btn.classList.remove(activeButtonClass);
+        //     if (textStyleState.textAlign == 'left') {
+        //     btn.classList.add(activeButtonClass);
+        //     }
+        // }
+
+        // const alignCenterButtons = this.shadowRoot.querySelectorAll('button[editor-action="align-center"]');
+        // for (const btn of alignCenterButtons) {
+        //     btn.classList.remove(activeButtonClass);
+        //     if (textStyleState.textAlign == 'center') {
+        //     btn.classList.add(activeButtonClass);
+        //     }
+        // }
+
+        // const alignRightButtons = this.shadowRoot.querySelectorAll('button[editor-action="align-right"]');
+        // for (const btn of alignRightButtons) {
+        //     btn.classList.remove(activeButtonClass);
+        //     if (textStyleState.textAlign == 'right') {
+        //     btn.classList.add(activeButtonClass);
+        //     }
+        // }
+
+        // const alignJustifyButtons = this.shadowRoot.querySelectorAll('button[editor-action="align-justify"]');
+        // for (const btn of alignJustifyButtons) {
+        //     btn.classList.remove(activeButtonClass);
+        //     if (textStyleState.textAlign == 'justify') {
+        //     btn.classList.add(activeButtonClass);
+        //     }
+        // }
+
+        const togglableActions = [
+            'bold',
+            'italic',
+            'underline',
+            'strikethrough',
+            'align-left',
+            'align-center',
+            'align-right',
+            'align-justify',
+        ];
+
+        for (const action of togglableActions) {
+            const buttons = this.shadowRoot.querySelectorAll(`button[editor-action="${action}"]`);
+            for (const btn of buttons) {
+                btn.classList.remove(activeButtonClass);
+                if (textStyleState[action]) {
+                    btn.classList.add(activeButtonClass);
+                }
+            }
+        }
+
+
+        const fontSizeDropdowns = this.shadowRoot.querySelectorAll('[editor-action="select-font-size"]');
+        for (const ddown of fontSizeDropdowns) {
+            if (textStyleState.fontSize) {
+                const options = ddown.querySelectorAll('option');
+                for (const opt of options) {
+                    if (opt.value == textStyleState.fontSize) {
+                        opt.selected = true;
+                    }
+                }
+            } else {
+                // reset to default (option where value = "")
+                ddown.value = "";
+            }
+        }
+
+        const fontFamilyDropdowns = this.shadowRoot.querySelectorAll('[editor-action="select-font-family"]');
+        for (const ddown of fontFamilyDropdowns) {
+            if (textStyleState.fontFamily) {
+                const options = ddown.querySelectorAll('option');
+                for (const opt of options) {
+                    if (opt.value == textStyleState.fontFamily) {
+                    opt.selected = true;
+                    }
+                }
+            } else {
+                // reset to default (option where value = "")
+                ddown.value = "";
+            }
+        }
+
+        const fontColorPreviews = this.shadowRoot.querySelectorAll('.current-color');
+        for (const preview of fontColorPreviews) {
+            if (textStyleState.color) {
+                preview.style.backgroundColor = textStyleState.color;
+            } else {
+                preview.style.backgroundColor = '#000000';
+            }
+        }
+
     }
 
 }
