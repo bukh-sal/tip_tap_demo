@@ -225,6 +225,8 @@ class TiptapEditor extends HTMLElement {
                     padding: 1em;
                     font-size: 1rem;
                     border-radius: 6px/.375rem
+                    max-width: 100%;
+                    overflow-x: auto;
                 }
 
                 .tiptap.ProseMirror pre code {
@@ -580,7 +582,7 @@ class TiptapEditor extends HTMLElement {
     _getEditorStyles() {
         return `
             <style>
-                .top-bar {
+                .top-bar-container {
                     position: sticky;
                     top: 3px;
                     z-index: 10;
@@ -590,9 +592,15 @@ class TiptapEditor extends HTMLElement {
                     border-radius: 0.375rem;
                     padding-inline: 4px;
                     padding-block: 0px;
+                    margin-bottom: 20px;
+                }
+                .top-bar {
+                    scale: 1.1;
                     display: flex;
+                    flex-wrap: wrap;
                     gap: 0.1rem;
                     align-items: center;
+                    justify-content: center;
                 }
 
                 .editor-button {
@@ -660,81 +668,135 @@ class TiptapEditor extends HTMLElement {
                     .editor-container {
                         max-height: 80vh;
                         overflow-y: auto;
+                        overflow-x: hidden;
                         border-bottom: 1px solid var(--tt-gray-light-a-200);
                     }
                 }
-            </style>
+                @media (min-width: 768px) {
+                    .tiptap-editor {
+                        max-width: 80%;
+                        margin: 0 auto;
+                    }
+                }
+                </style>
             <div class="editor-container relative">
-                <div class="top-bar">
-                    <button class="editor-button" title="Bold" editor-action="undo">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo2-icon lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
-                    </button>
-                    <button class="editor-button" title="Bold" editor-action="redo">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-redo2-icon lucide-redo-2"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5A5.5 5.5 0 0 0 4 14.5A5.5 5.5 0 0 0 9.5 20H13"/></svg>
-                    </button>
+                <div class="top-bar-container">
+                    <div class="top-bar">
+                        <button class="editor-button" title="Bold" editor-action="undo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo2-icon lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
+                        </button>
+                        <button class="editor-button" title="Bold" editor-action="redo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-redo2-icon lucide-redo-2"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5A5.5 5.5 0 0 0 4 14.5A5.5 5.5 0 0 0 9.5 20H13"/></svg>
+                        </button>
 
-                    <span class="buttons-separator"></span>
+                        <span class="buttons-separator"></span>
 
-                    <select editor-action="select-font-size" class="editor-select">
-                        <option value="" selected>Default Font</option>
-                        <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">System UI</option>
-                        <option value="'IBM Plex Sans Arabic', monospace;">IBM Plex Sans</option>
-                        <option value="'Noto Kufi Arabic', sans-serif">Noto Kufi</option>
-                        <option value="'Noto Sans Arabic', sans-serif">Noto Sans</option>
-                        <option value="'Cascadia Code', sans-serif;">Cascadia Code</option>
-                        <option value="'Intel One Mono', monospace;">Intel One Mono</option>
-                        <option value="Arial, sans-serif">Arial</option>
-                        <option value="sans-serif">Sans-serif</option>
-                        <option value="serif">Serif</option>
-                        <option value="'Inter', sans-serif">Inter</option>
-                        <option value="'Rubik', sans-serif;">Rubik</option>
-                        <option value="'Montserrat', sans-serif;">Montserrat</option>
-                        <option value="'Roboto', sans-serif;">Roboto</option>
-                        <option value="'Open Sans', sans-serif;">Open Sans</option>
-                        <option value="'Ubuntu', sans-serif;">Ubuntu</option>
-                        <option value="'Times New Roman', Times, serif">Times New Roman</option>
-                        <option value="monospace">Monospace</option>
-                    </select>
-
-
-                    <select editor-action="select-font-size" class="editor-select">
-                        <option editor-action="clear-font-size" value="">Default Size</option>
-                        <option editor-action="set-heading" value="1">Heading 1</option>
-                        <option editor-action="set-heading" value="2">Heading 2</option>
-                        <option editor-action="set-heading" value="3">Heading 3</option>
-                        <option editor-action="set-heading" value="4">Heading 4</option>
-                        <option editor-action="set-heading" value="5">Heading 5</option>
-                        <option editor-action="set-heading" value="6">Heading 6</option>
-                        <option editor-action="set-pixel-size" value="12px">12px</option>
-                        <option editor-action="set-pixel-size" value="14px">14px</option>
-                        <option editor-action="set-pixel-size" value="16px">16px</option>
-                        <option editor-action="set-pixel-size" value="18px">18px</option>
-                        <option editor-action="set-pixel-size" value="20px">20px</option>
-                        <option editor-action="set-pixel-size" value="24px">24px</option>
-                        <option editor-action="set-pixel-size" value="32px">32px</option>
-                        <option editor-action="set-pixel-size" value="36px">36px</option>
-                        <option editor-action="set-pixel-size" value="40px">40px</option>
-                        <option editor-action="set-pixel-size" value="48px">48px</option>
-                        <option editor-action="set-pixel-size" value="56px">56px</option>
-                        <option editor-action="set-pixel-size" value="64px">64px</option>
-                        <option editor-action="set-pixel-size" value="72px">72px</option>
-                        <option editor-action="set-pixel-size" value="80px">80px</option>
-                        <option editor-action="set-pixel-size" value="96px">96px</option>
-                        <option editor-action="set-pixel-size" value="128px">128px</option>
-                        <option editor-action="set-pixel-size" value="160px">160px</option>
-                    </select>
+                        <select editor-action="select-font-size" class="editor-select">
+                            <option value="" selected>Default Font</option>
+                            <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">System UI</option>
+                            <option value="'IBM Plex Sans Arabic', monospace;">IBM Plex Sans</option>
+                            <option value="'Noto Kufi Arabic', sans-serif">Noto Kufi</option>
+                            <option value="'Noto Sans Arabic', sans-serif">Noto Sans</option>
+                            <option value="'Cascadia Code', sans-serif;">Cascadia Code</option>
+                            <option value="'Intel One Mono', monospace;">Intel One Mono</option>
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="sans-serif">Sans-serif</option>
+                            <option value="serif">Serif</option>
+                            <option value="'Inter', sans-serif">Inter</option>
+                            <option value="'Rubik', sans-serif;">Rubik</option>
+                            <option value="'Montserrat', sans-serif;">Montserrat</option>
+                            <option value="'Roboto', sans-serif;">Roboto</option>
+                            <option value="'Open Sans', sans-serif;">Open Sans</option>
+                            <option value="'Ubuntu', sans-serif;">Ubuntu</option>
+                            <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                            <option value="monospace">Monospace</option>
+                        </select>
 
 
-                    <span class="buttons-separator"></span>
+                        <select editor-action="select-font-size" class="editor-select">
+                            <option editor-action="clear-font-size" value="">Default Size</option>
+                            <option editor-action="set-heading" value="1">Heading 1</option>
+                            <option editor-action="set-heading" value="2">Heading 2</option>
+                            <option editor-action="set-heading" value="3">Heading 3</option>
+                            <option editor-action="set-heading" value="4">Heading 4</option>
+                            <option editor-action="set-heading" value="5">Heading 5</option>
+                            <option editor-action="set-heading" value="6">Heading 6</option>
+                            <option editor-action="set-pixel-size" value="12px">12px</option>
+                            <option editor-action="set-pixel-size" value="14px">14px</option>
+                            <option editor-action="set-pixel-size" value="16px">16px</option>
+                            <option editor-action="set-pixel-size" value="18px">18px</option>
+                            <option editor-action="set-pixel-size" value="20px">20px</option>
+                            <option editor-action="set-pixel-size" value="24px">24px</option>
+                            <option editor-action="set-pixel-size" value="32px">32px</option>
+                            <option editor-action="set-pixel-size" value="36px">36px</option>
+                            <option editor-action="set-pixel-size" value="40px">40px</option>
+                            <option editor-action="set-pixel-size" value="48px">48px</option>
+                            <option editor-action="set-pixel-size" value="56px">56px</option>
+                            <option editor-action="set-pixel-size" value="64px">64px</option>
+                            <option editor-action="set-pixel-size" value="72px">72px</option>
+                            <option editor-action="set-pixel-size" value="80px">80px</option>
+                            <option editor-action="set-pixel-size" value="96px">96px</option>
+                            <option editor-action="set-pixel-size" value="128px">128px</option>
+                            <option editor-action="set-pixel-size" value="160px">160px</option>
+                        </select>
 
 
-                    <button class="editor-button" title="Bold" editor-action="bold">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bold-icon lucide-bold"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"></path></svg>
-                    </button>
+                        <span class="buttons-separator"></span>
+
+
+                        <button type="button" editor-action="bold" class="editor-button" title="bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bold-icon lucide-bold"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"></path></svg>
+                        </button>
+
+                        <button type="button" editor-action="italic" class="editor-button" title="bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-italic-icon lucide-italic"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg>
+                        </button>
+
+                        <button type="button" editor-action="underline" class="editor-button" title="bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-underline-icon lucide-underline"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>
+                        </button>
+
+                        <button type="button" editor-action="strikethrough" class="editor-button" title="bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-strikethrough-icon lucide-strikethrough"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
+                        </button>
+
+                        <span class="buttons-separator"></span>
+
+                        <button type="button" editor-action="quote" class="editor-button" title="bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-quote-icon lucide-quote"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
+                        </button>
+
+                        <button type="button" editor-action="code" class="editor-button" title="bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-icon lucide-code"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>
+                        </button>
+
+                        <button type="button" editor-action="link" class="editor-button" title="bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link-icon lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                        </button>
+
+                        <span class="buttons-separator"></span>
+
+
+                        <button type="button" editor-action="align-left" class="editor-button" title="bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-left-icon lucide-align-left"><path d="M15 12H3"/><path d="M17 18H3"/><path d="M21 6H3"/></svg>
+                        </button>
+
+                        <button type="button" editor-action="align-center" class="editor-button" title="bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-center-icon lucide-align-center"><path d="M17 12H7"/><path d="M19 18H5"/><path d="M21 6H3"/></svg>
+                        </button>
+
+                        <button type="button" editor-action="align-right" class="editor-button" title="bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-right-icon lucide-align-right"><path d="M21 12H9"/><path d="M21 18H7"/><path d="M21 6H3"/></svg>
+                        </button>
+
+                        <button type="button" editor-action="align-justify" class="editor-button" title="bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify-icon lucide-align-justify"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>
+                        </button>
+
+                    </div>
                 </div>
 
-
-                <div class="tiptap_editor"></div>
+                <div class="tiptap-editor"></div>
             </div>
         `;
     }
@@ -765,7 +827,7 @@ class TiptapEditor extends HTMLElement {
     }
 
     setupEditor() {
-        const container = this.shadowRoot.querySelector('.tiptap_editor');
+        const container = this.shadowRoot.querySelector('.tiptap-editor');
         this.editor = get_editor({
             element: container,
             editable: true,

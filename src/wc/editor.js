@@ -47,7 +47,11 @@ export function get_editor({ element, editable=true, content='', parentDOM=docum
         BulletList,
         ListItem,
         OrderedList,
-        CodeBlock,
+        CodeBlock.configure({
+            HTMLAttributes: {
+                spellcheck: false,
+            },
+        }),
         Heading.configure({
             levels: [1, 2, 3, 4, 5, 6],
         }),
