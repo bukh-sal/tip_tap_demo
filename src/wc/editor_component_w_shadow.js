@@ -285,7 +285,7 @@ class TiptapEditor extends HTMLElement {
                 }
 
                 h1,h2,h3,h4,h5,h6 {
-                    font-weight: 700;
+                    font-weight: 500;
                     margin-top: 1.5rem;
                     margin-bottom: 0.5rem;
                     line-height: 1.2;
