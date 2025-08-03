@@ -75,7 +75,7 @@ class TiptapEditor extends HTMLElement {
                     --tt-selection-color: rgba(157,138,255,0.2);
                     
                     /* Resets previously on :host,html */
-                    line-height: 1.5;
+                    line-height: 1.2;
                     -webkit-text-size-adjust: 100%;
                     -moz-tab-size: 4;
                     tab-size: 4;
@@ -118,7 +118,7 @@ class TiptapEditor extends HTMLElement {
 
                 .tiptap.ProseMirror p {
                     font-size: 1.2rem;
-                    line-height: 1.6;
+                    line-height: 1.2;
                     font-weight: 400;
                 }
 
@@ -211,7 +211,7 @@ class TiptapEditor extends HTMLElement {
                     border: 1px solid var(--tt-inline-code-border-color);
                     font-family: JetBrains Mono NL,monospace;
                     font-size: 1em;
-                    line-height: 1.4;
+                    line-height: 1;
                     border-radius: var(--tt-radius-md);
                     padding: .1em .2em;
                 }
@@ -221,12 +221,13 @@ class TiptapEditor extends HTMLElement {
                     color: #cfd0db;
                     border: 1px solid var(--tt-codeblock-border);
                     margin-top: 1.5em;
-                    margin-bottom: 1.5em;
+                    margin-bottom: 0.5em;
                     padding: 1em;
                     font-size: 1rem;
                     border-radius: var(--tt-radius-md);
                     max-width: 100%;
                     overflow-x: auto;
+                    line-height: 1.4;
                 }
 
                 .tiptap.ProseMirror pre code {
@@ -285,7 +286,9 @@ class TiptapEditor extends HTMLElement {
 
                 h1,h2,h3,h4,h5,h6 {
                     font-weight: 700;
+                    margin-top: 1.5rem;
                     margin-bottom: 0.5rem;
+                    line-height: 1.2;
                 }
 
                 h1 { font-size: 3.7em; }
@@ -329,8 +332,8 @@ class TiptapEditor extends HTMLElement {
                 }
 
                 .tiptap.ProseMirror ol,.tiptap.ProseMirror ul {
-                    margin-top: 1.5em;
-                    margin-bottom: 1.5em;
+                    margin-top: 0em;
+                    margin-bottom: 0em;
                     padding-left: 1.5em
                 }
 
@@ -349,7 +352,7 @@ class TiptapEditor extends HTMLElement {
 
                 .tiptap.ProseMirror li p {
                     margin-top: 0;
-                    line-height: 1.6
+                    line-height: 1.2;
                 }
 
                 .tiptap.ProseMirror ol {
