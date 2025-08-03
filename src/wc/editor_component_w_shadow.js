@@ -212,7 +212,7 @@ class TiptapEditor extends HTMLElement {
                     font-family: JetBrains Mono NL,monospace;
                     font-size: 1em;
                     line-height: 1.4;
-                    border-radius: 6px/.375rem;
+                    border-radius: var(--tt-radius-md);
                     padding: .1em .2em;
                 }
 
@@ -224,7 +224,7 @@ class TiptapEditor extends HTMLElement {
                     margin-bottom: 1.5em;
                     padding: 1em;
                     font-size: 1rem;
-                    border-radius: 6px/.375rem
+                    border-radius: var(--tt-radius-md);
                     max-width: 100%;
                     overflow-x: auto;
                 }
@@ -724,8 +724,9 @@ class TiptapEditor extends HTMLElement {
                 }
                 .color-swatch-grid {
                     display: grid;
-                    grid-template-columns: repeat(5, 1fr);
+                    grid-template-columns: repeat(8, 1fr);
                     grid-gap: 0.2rem;
+                    padding-bottom: 0.7rem;
                 }
                 .color-swatch {
                     width: 25px;
@@ -735,7 +736,19 @@ class TiptapEditor extends HTMLElement {
                     cursor: pointer;
                     transition: transform 0.2s ease-in-out;
                 }
+                .highlight-swatch {
+                    width: 25px;
+                    height: 25px;
+                    border: 1px solid #d1d5dc;
+                    border-radius: 0.25rem;
+                    cursor: pointer;
+                    transition: transform 0.2s ease-in-out;
+                }
                 .color-swatch:hover {
+                    border: 1px solid #a4a4a4;
+                    transform: translateY(-1px);
+                }
+                .highlight-swatch:hover {
                     border: 1px solid #a4a4a4;
                     transform: translateY(-1px);
                 }
@@ -754,6 +767,14 @@ class TiptapEditor extends HTMLElement {
                     background-color: rgba(255, 255, 255, 0.5);
                     border: 1px solid #d1d5dc;
                     backdrop-filter: blur(2px);
+
+                    h6 {
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: #000000a6;
+                        margin: 0;
+                        padding-bottom: 0.5rem;
+                    }
                 }
                 #text-color-picker:popover-open {
                     display: block;
@@ -912,6 +933,7 @@ class TiptapEditor extends HTMLElement {
                         </div>
 
                         <div id="text-color-picker" popover>
+                            <h6>Colors</h6>
                             <div class="color-swatch-grid">
                                 <button class="color-swatch" style="background-color: #000000;" data-color="#000000"></button>
                                 <button class="color-swatch" style="background-color: #404040;" data-color="#404040"></button>
@@ -937,6 +959,17 @@ class TiptapEditor extends HTMLElement {
                                 <button class="color-swatch" style="background-color: #49aae5;" data-color="#49aae5"></button>
                                 <button class="color-swatch" style="background-color: #853d90;" data-color="#853d90"></button>
                                 <button class="color-swatch" style="background-color: #527f13;" data-color="#527f13"></button>
+                            </div>
+                            <h6>Highlight</h6>
+                            <div class="color-swatch-grid">
+                                <button class="highlight-swatch" style="background-color: #ffffff;" data-color=""></button>
+                                <button class="highlight-swatch" style="background-color: #F8FF00;" data-color="#F8FF00"></button>
+                                <button class="highlight-swatch" style="background-color: #A41A1A;" data-color="#A41A1A"></button>
+                                <button class="highlight-swatch" style="background-color: #10FF00;" data-color="#10FF00"></button>
+                                <button class="highlight-swatch" style="background-color: #00FFD9;" data-color="#00FFD9"></button>
+                                <button class="highlight-swatch" style="background-color: #49aae5;" data-color="#49aae5"></button>
+                                <button class="highlight-swatch" style="background-color: #ff0000;" data-color="#ff0000"></button>
+
                             </div>
                         </div>
 
@@ -1159,8 +1192,20 @@ class TiptapEditor extends HTMLElement {
         for (const colorChoice of colorChoices) {
           colorChoice.addEventListener('click', () => {
             // data-color
-            const color = colorChoice.dataset.color;
+            const color = colorChoice.getAttribute('data-color');
             this.editor.chain().focus().setColor(color).run();
+          });
+        }
+
+        const highlightChoices = this.shadowRoot.querySelectorAll('.highlight-swatch');
+        for (const highlightChoice of highlightChoices) {
+          highlightChoice.addEventListener('click', () => {
+            // data-color
+            const color = highlightChoice.getAttribute('data-color');
+            this.editor.chain().focus().unsetHighlight().run();
+            if (color) {
+                this.editor.chain().focus().setHighlight({color: color}).run();
+            }
           });
         }
 

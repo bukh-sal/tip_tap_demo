@@ -28,6 +28,7 @@ import Link from '@tiptap/extension-link'
 import Strike from '@tiptap/extension-strike'
 import Underline from '@tiptap/extension-underline'
 import { UndoRedo } from '@tiptap/extensions'
+import Highlight from '@tiptap/extension-highlight'
 
 const lowlight = createLowlight(all)
 
@@ -105,6 +106,9 @@ export function get_editor({ element, editable=true, content='', parentDOM=docum
         Strike,
         Underline,
         UndoRedo,
+        Highlight.configure({
+            multicolor: true
+        }),
     ],
     autofocus: "start",
     content: content || '',
