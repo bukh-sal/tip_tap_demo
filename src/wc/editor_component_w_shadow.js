@@ -526,6 +526,13 @@ class TiptapEditor extends HTMLElement {
                     pointer-events: none;
                     height: 0;
                 }
+
+                .tiptap mark {
+                    background-color: #faf594;
+                    border-radius: 0.4rem;
+                    box-decoration-break: clone;
+                    padding: 0.1rem 0.3rem;
+                }
                 
                 /* lowlight styles */
                 .tiptap {
