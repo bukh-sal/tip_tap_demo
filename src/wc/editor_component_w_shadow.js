@@ -307,7 +307,7 @@ class TiptapEditor extends HTMLElement {
                 sub,sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline }
                 sub { bottom: -.25em }
                 sup { top: -.5em }
-                table { text-indent: 0; border-color: inherit; border-collapse: collapse }
+
                 menu,ol,ul { list-style: none; margin: 0; padding: 0 }
                 textarea { resize: vertical }
                 input::placeholder,textarea::placeholder { opacity: 1; color: #9ca3af }
@@ -457,58 +457,66 @@ class TiptapEditor extends HTMLElement {
                     margin-top: 0;
                 }
 
-                .tiptap table {
-                    border-collapse: collapse;
-                    margin: 0;
-                    overflow: hidden;
-                    table-layout: fixed;
-                    width: 100%;
-                    border-radius: 0.25rem;
-                }
+                .tiptap {
+                    table {
+                        border-collapse: collapse;
+                        margin: 0;
+                        overflow: hidden;
+                        table-layout: fixed;
+                        width: 100%;
+                        border-radius: 0.25rem;
 
-                .tiptap td,
-                .tiptap th {
-                    border: 1px solid #dddddd;
-                    box-sizing: border-box;
-                    min-width: 1em;
-                    padding: 6px 8px;
-                    position: relative;
-                    vertical-align: top;
-                }
+                        td,
+                        th {
+                            border: 1px solid var(--tt-gray-light-300);
+                            box-sizing: border-box;
+                            min-width: 1em;
+                            padding: 6px 8px;
+                            position: relative;
+                            vertical-align: top;
+                            > * {
+                                margin: 0;
+                            }
+                        }
 
-                .tiptap td > *,
-                .tiptap th > * {
-                    margin: 0;
-                }
+                        th {
+                            background-color: var(--tt-gray-light-100);
+                            font-weight: bold;
+                            text-align: left;
+                        }
 
-                .tiptap th {
-                    background-color: var(--tt-gray-light-200);
-                    font-weight: bold;
-                    text-align: left;
-                }
+                        .selectedCell:after {
+                            background: var(--tt-gray-light-a-100);
+                            content: '';
+                            left: 0;
+                            right: 0;
+                            top: 0;
+                            bottom: 0;
+                            pointer-events: none;
+                            position: absolute;
+                            z-index: 2;
+                        }
 
-                .tiptap tr {
-                    background-color: var(--tt-gray-light-50);
-                }
+                        .column-resize-handle {
+                            background-color: var(--tt-brand-color-400);
+                            bottom: -2px;
+                            pointer-events: none;
+                            position: absolute;
+                            right: -2px;
+                            top: 0;
+                            width: 4px;
+                        }
+                    }
 
-                .tiptap .column-resize-handle {
-                    background-color: var(--tt-brand-color-500);
-                    bottom: -2px;
-                    pointer-events: none;
-                    position: absolute;
-                    right: -2px;
-                    top: 0;
-                    width: 4px;
-                }
+                    .tableWrapper {
+                        margin: 1.5rem 0;
+                        overflow-x: auto;
+                    }
 
-                .tiptap .tableWrapper {
-                    margin: 1.5rem 0;
-                    overflow-x: auto;
-                }
-
-                .tiptap.resize-cursor {
-                    cursor: ew-resize;
-                    cursor: col-resize;
+                    &.resize-cursor {
+                        cursor: ew-resize;
+                        cursor: col-resize;
+                    }
                 }
 
                 .drag-handle {
