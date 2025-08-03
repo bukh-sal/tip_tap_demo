@@ -796,6 +796,37 @@ class TiptapEditor extends HTMLElement {
                 #text-color-picker:popover-open {
                     display: block;
                 }
+
+                #top-bar-insert-list-dropdown {
+                    anchor-name: --top_bar_insert_list_dropdown_anchor;
+                }
+
+                #insert-list-dropdown {
+                    margin: 0;
+                    margin-top: 10px;
+                    padding: 0.5rem;
+                    border-radius: 0.25rem;
+                    display: none;
+                    position-anchor: --top_bar_insert_list_dropdown_anchor;
+                    top: anchor(--top_bar_insert_list_dropdown_anchor bottom);
+                    left: anchor(--top_bar_insert_list_dropdown_anchor start);
+                    background-color: rgba(255, 255, 255, 0.5);
+                    border: 1px solid #d1d5dc;
+                    backdrop-filter: blur(2px);
+
+                    h6 {
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: #000000a6;
+                        margin: 0;
+                        padding-bottom: 0.5rem;
+                        cursor: default;
+                        user-select: none;
+                    }
+                }
+                #insert-list-dropdown:popover-open {
+                    display: block;
+                }
             </style>
         `;
     }
@@ -957,6 +988,37 @@ class TiptapEditor extends HTMLElement {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image-icon lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                             </button>
 
+                            <button id="top-bar-insert-list-dropdown" popovertarget="insert-list-dropdown" class="editor-button" title="Insert List">
+                                <span style="display: flex; align-items: end;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-icon lucide-list"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+
+                        </div>
+
+                        <div id="insert-list-dropdown" popover>
+                            <h6>Insert List</h6>
+                            <div>
+                                <div>
+                                    <button class="editor-button" editor-action="bullet-list" style="margin-right: 0.5rem; display: flex; align-items: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-icon lucide-list"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>
+                                        <span style="margin-inline-start: 0.5rem;">Bullet List</span>
+                                    </button>
+                                </div>
+                                <div>
+                                    <button class="editor-button" editor-action="ordered-list" style="margin-right: 0.5rem; display: flex; align-items: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-ordered-icon lucide-list-ordered"><path d="M10 12h11"/><path d="M10 18h11"/><path d="M10 6h11"/><path d="M4 10h2"/><path d="M4 6h1v4"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+                                        <span style="margin-inline-start: 0.5rem;">Ordered List</span>
+                                    </button>
+                                </div>
+                                <div>
+                                    <button class="editor-button" editor-action="tasks-list" style="margin-right: 0.5rem; display: flex; align-items: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-checks-icon lucide-list-checks"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+                                        <span style="margin-inline-start: 0.5rem;">Tasks List</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div id="text-color-picker" popover>
