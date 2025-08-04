@@ -19,8 +19,8 @@ class TableMenu {
                 key: 'add',
                 label: 'Add',
                 icon: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>`,
-                btnClass: 'toolbar-btn',
-                menuClass: 'dropdown-menu',
+                btnClass: 'editor-table-toolbar-btn',
+                menuClass: 'editor-toolbar-dropdown-menu',
                 items: [
                     { action: 'add-row-before', label: 'Row Above', icon: '⬆️' },
                     { action: 'add-row-after', label: 'Row Below', icon: '⬇️' },
@@ -32,8 +32,8 @@ class TableMenu {
                 key: 'delete',
                 label: 'Delete',
                 icon: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z"/></svg>`,
-                btnClass: 'toolbar-btn danger',
-                menuClass: 'dropdown-menu',
+                btnClass: 'editor-table-toolbar-btn danger',
+                menuClass: 'editor-toolbar-dropdown-menu',
                 items: [
                     { action: 'delete-row', label: 'Delete Row', icon: '🗑️' },
                     { action: 'delete-col', label: 'Delete Col', icon: '🗑️' },
@@ -44,8 +44,8 @@ class TableMenu {
                 key: 'headers',
                 label: 'Headers',
                 icon: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="6" rx="1"/><rect x="3" y="9" width="18" height="12" rx="1"/></svg>`,
-                btnClass: 'toolbar-btn',
-                menuClass: 'dropdown-menu',
+                btnClass: 'editor-table-toolbar-btn',
+                menuClass: 'editor-toolbar-dropdown-menu',
                 items: [
                     { action: 'toggle-header-row', label: 'Header Row', icon: '🔠' },
                     { action: 'toggle-header-col', label: 'Header Col', icon: '🔠' },
@@ -57,7 +57,7 @@ class TableMenu {
     static getStyles() {
         return `
         <style>
-            .table-menu {
+            .editor-table-menu {
                 position: absolute;
                 z-index: 2100;
                 background: #fff;
@@ -69,7 +69,7 @@ class TableMenu {
                 gap: 0.5rem;
                 padding: 0.5rem;
             }
-            .toolbar-btn {
+            .editor-table-toolbar-btn {
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
@@ -82,18 +82,18 @@ class TableMenu {
                 cursor: pointer;
                 transition: background 0.2s;
             }
-            .toolbar-btn:hover {
+            .editor-table-toolbar-btn:hover {
                 background: #f3f4f6;
             }
-            .toolbar-btn.danger {
+            .editor-table-toolbar-btn.danger {
                 color: #dc2626;
                 border-color: #fecaca;
                 background: #fff;
             }
-            .toolbar-btn.danger:hover {
+            .editor-table-toolbar-btn.danger:hover {
                 background: #fee2e2;
             }
-            .dropdown-menu {
+            .editor-toolbar-dropdown-menu {
                 position: absolute;
                 left: 0;
                 top: 100%;
@@ -106,10 +106,10 @@ class TableMenu {
                 flex-direction: column;
                 z-index: 10;
             }
-            .dropdown-menu.flex {
+            .editor-toolbar-dropdown-menu.flex {
                 display: flex;
             }
-            .dropdown-item {
+            .editor-toolbar-dropdown-item {
                 padding: 0.5rem 1rem;
                 font-size: 14px;
                 text-align: left;
@@ -123,10 +123,10 @@ class TableMenu {
                 align-items: center;
                 gap: 0.5rem;
             }
-            .dropdown-item:hover {
+            .editor-toolbar-dropdown-item:hover {
                 background: #f3f4f6;
             }
-            .dropdown-item.text-red-600 {
+            .editor-toolbar-dropdown-item.text-red-600 {
                 color: #dc2626;
             }
         </style>
@@ -135,9 +135,9 @@ class TableMenu {
 
     _injectStyles() {
         // Only inject once per container
-        if (!this.container.querySelector('style[data-table-menu]')) {
+        if (!this.container.querySelector('style[data-editor-table-menu]')) {
             const style = document.createElement('style');
-            style.setAttribute('data-table-menu', 'true');
+            style.setAttribute('data-editor-table-menu', 'true');
             style.innerHTML = TableMenu.getStyles().replace(/<style>|<\/style>/g, '');
             this.container.appendChild(style);
         }
@@ -145,7 +145,7 @@ class TableMenu {
 
     _createMenuDiv() {
         const div = document.createElement('div');
-        div.className = 'table-menu';
+        div.className = 'editor-table-menu';
         div.style.display = 'none';
         this.container.appendChild(div);
         return div;
@@ -191,7 +191,7 @@ class TableMenu {
             const itemBtn = document.createElement('button');
             itemBtn.type = 'button';
             itemBtn.innerHTML = `<span>${btn.icon}</span><span>${btn.label}</span>`;
-            itemBtn.className = `dropdown-item${btn.danger ? ' text-red-600' : ''}`;
+            itemBtn.className = `editor-toolbar-dropdown-item${btn.danger ? ' text-red-600' : ''}`;
             itemBtn.setAttribute('data-action', btn.action);
             menu.appendChild(itemBtn);
         });
@@ -294,11 +294,6 @@ class TiptapEditor extends HTMLElement {
         return `
             <style>
                 :host {
-                    overflow-wrap: break-word;
-                    text-size-adjust: none;
-                    text-rendering: optimizeLegibility;
-                    -webkit-font-smoothing: antialiased;
-                    -moz-osx-font-smoothing: grayscale;
                     --tt-gray-light-a-50: rgba(56,56,56,0.04);
                     --tt-gray-light-a-100: rgba(15,22,36,0.05);
                     --tt-gray-light-a-200: rgba(37,39,45,0.1);
@@ -343,8 +338,19 @@ class TiptapEditor extends HTMLElement {
                     --tt-transition-easing-default: cubic-bezier(0.46,0.03,0.52,0.96);
                     --tt-cursor-color: var(--tt-brand-color-500);
                     --tt-selection-color: rgba(157,138,255,0.2);
-                    
-                    /* Resets previously on :host,html */
+                }
+
+                :host *,:host :after,:host :before {
+                    box-sizing: border-box;
+                    transition: none var(--tt-transition-duration-default) var(--tt-transition-easing-default)
+                }
+
+                .tiptap {
+                    overflow-wrap: break-word;
+                    text-size-adjust: none;
+                    text-rendering: optimizeLegibility;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
                     line-height: 1.2;
                     -webkit-text-size-adjust: 100%;
                     -moz-tab-size: 4;
@@ -352,12 +358,7 @@ class TiptapEditor extends HTMLElement {
                     font-family: GeistSans,ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
                     font-feature-settings: normal;
                     font-variation-settings: normal;
-                    -webkit-tap-highlight-color: rgba(0,0,0,0)
-                }
-
-                :host *,:host :after,:host :before {
-                    box-sizing: border-box;
-                    transition: none var(--tt-transition-duration-default) var(--tt-transition-easing-default)
+                    -webkit-tap-highlight-color: rgba(0,0,0,0);
                 }
 
                 /* Base Tiptap and ProseMirror styles - these selectors are fine as is */
@@ -954,7 +955,7 @@ class TiptapEditor extends HTMLElement {
     _getEditorStyles() {
         return `
             <style>
-                .top-bar-container {
+                .editor-top-bar-container {
                     position: sticky;
                     top: 3px;
                     z-index: 10;
@@ -966,7 +967,7 @@ class TiptapEditor extends HTMLElement {
                     padding-block: 0px;
                     margin-bottom: 20px;
                 }
-                .top-bar {
+                .editor-top-bar {
                     scale: 1.1;
                     display: flex;
                     flex-wrap: wrap;
@@ -1174,8 +1175,8 @@ class TiptapEditor extends HTMLElement {
                 }
                 </style>
                 <div class="editor-container relative">
-                    <div class="top-bar-container">
-                        <div class="top-bar">
+                    <div class="editor-top-bar-container">
+                        <div class="editor-top-bar">
                             <button class="editor-button" title="Undo" editor-action="undo">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo2-icon lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
                             </button>
