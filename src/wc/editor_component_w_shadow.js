@@ -1,5 +1,272 @@
 import { get_editor } from "./editor.js";
 
+class TableMenu {
+    constructor(editor, container) {
+        this.editor = editor;
+        this.container = container;
+        this._injectStyles();
+        this.menuDiv = this._createMenuDiv();
+        this.dropdownRefs = {};
+        this._setupDropdowns();
+        this.menuDiv.addEventListener('click', this._handleMenuClick.bind(this));
+        this.hide();
+    }
+
+    static getDropdowns() {
+        return [
+            {
+                key: 'add',
+                label: 'Add',
+                icon: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>`,
+                btnClass: 'toolbar-btn',
+                menuClass: 'dropdown-menu',
+                items: [
+                    { action: 'add-row-before', label: 'Row Above', icon: '⬆️' },
+                    { action: 'add-row-after', label: 'Row Below', icon: '⬇️' },
+                    { action: 'add-col-before', label: 'Col Left', icon: '⬅️' },
+                    { action: 'add-col-after', label: 'Col Right', icon: '➡️' },
+                ]
+            },
+            {
+                key: 'delete',
+                label: 'Delete',
+                icon: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z"/></svg>`,
+                btnClass: 'toolbar-btn danger',
+                menuClass: 'dropdown-menu',
+                items: [
+                    { action: 'delete-row', label: 'Delete Row', icon: '🗑️' },
+                    { action: 'delete-col', label: 'Delete Col', icon: '🗑️' },
+                    { action: 'delete-table', label: 'Delete Table', icon: '🗑️', danger: true },
+                ]
+            },
+            {
+                key: 'headers',
+                label: 'Headers',
+                icon: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="6" rx="1"/><rect x="3" y="9" width="18" height="12" rx="1"/></svg>`,
+                btnClass: 'toolbar-btn',
+                menuClass: 'dropdown-menu',
+                items: [
+                    { action: 'toggle-header-row', label: 'Header Row', icon: '🔠' },
+                    { action: 'toggle-header-col', label: 'Header Col', icon: '🔠' },
+                ]
+            }
+        ];
+    }
+
+    static getStyles() {
+        return `
+        <style>
+            .table-menu {
+                position: absolute;
+                z-index: 2100;
+                background: #fff;
+                border: 1px solid #d1d5dc;
+                border-radius: 6px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                display: flex;
+                flex-direction: row;
+                gap: 0.5rem;
+                padding: 0.5rem;
+            }
+            .toolbar-btn {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.25rem 0.75rem;
+                border-radius: 4px;
+                border: 1px solid #e5e7eb;
+                background: #fff;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            .toolbar-btn:hover {
+                background: #f3f4f6;
+            }
+            .toolbar-btn.danger {
+                color: #dc2626;
+                border-color: #fecaca;
+                background: #fff;
+            }
+            .toolbar-btn.danger:hover {
+                background: #fee2e2;
+            }
+            .dropdown-menu {
+                position: absolute;
+                left: 0;
+                top: 100%;
+                min-width: 160px;
+                background: #fff;
+                border: 1px solid #e5e7eb;
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                display: none;
+                flex-direction: column;
+                z-index: 10;
+            }
+            .dropdown-menu.flex {
+                display: flex;
+            }
+            .dropdown-item {
+                padding: 0.5rem 1rem;
+                font-size: 14px;
+                text-align: left;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background 0.2s;
+                background: none;
+                border: none;
+                color: #222;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .dropdown-item:hover {
+                background: #f3f4f6;
+            }
+            .dropdown-item.text-red-600 {
+                color: #dc2626;
+            }
+        </style>
+        `;
+    }
+
+    _injectStyles() {
+        // Only inject once per container
+        if (!this.container.querySelector('style[data-table-menu]')) {
+            const style = document.createElement('style');
+            style.setAttribute('data-table-menu', 'true');
+            style.innerHTML = TableMenu.getStyles().replace(/<style>|<\/style>/g, '');
+            this.container.appendChild(style);
+        }
+    }
+
+    _createMenuDiv() {
+        const div = document.createElement('div');
+        div.className = 'table-menu';
+        div.style.display = 'none';
+        this.container.appendChild(div);
+        return div;
+    }
+
+    _setupDropdowns() {
+        TableMenu.getDropdowns().forEach(cfg => {
+            const { dropdownDiv, button, menu } = this._createDropdown(cfg);
+            this.menuDiv.appendChild(dropdownDiv);
+            this.dropdownRefs[cfg.key] = { button, menu, dropdownDiv };
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                Object.entries(this.dropdownRefs).forEach(([k, r]) => {
+                    r.menu.classList.toggle('flex', k === cfg.key && r.menu.style.display === 'none');
+                    r.menu.style.display = (k === cfg.key && r.menu.style.display === 'none') ? 'flex' : 'none';
+                });
+            });
+        });
+        document.addEventListener('click', (e) => {
+            Object.values(this.dropdownRefs).forEach(ref => {
+                if (!ref.dropdownDiv.contains(e.target)) {
+                    ref.menu.style.display = 'none';
+                    ref.menu.classList.remove('flex');
+                }
+            });
+        });
+    }
+
+    _createDropdown({ key, label, icon, btnClass, menuClass, items }) {
+        const dropdownDiv = document.createElement('div');
+        dropdownDiv.className = 'relative';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = btnClass;
+        button.innerHTML = `${icon}<span>${label}</span>`;
+        button.setAttribute('data-dropdown', key);
+        dropdownDiv.appendChild(button);
+
+        const menu = document.createElement('div');
+        menu.className = menuClass;
+        menu.style.display = 'none';
+        items.forEach(btn => {
+            const itemBtn = document.createElement('button');
+            itemBtn.type = 'button';
+            itemBtn.innerHTML = `<span>${btn.icon}</span><span>${btn.label}</span>`;
+            itemBtn.className = `dropdown-item${btn.danger ? ' text-red-600' : ''}`;
+            itemBtn.setAttribute('data-action', btn.action);
+            menu.appendChild(itemBtn);
+        });
+        dropdownDiv.appendChild(menu);
+        return { dropdownDiv, button, menu };
+    }
+
+    _handleMenuClick(e) {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const action = btn.getAttribute('data-action');
+        this._runAction(action);
+        this.hide();
+    }
+
+    _runAction(action) {
+        const chain = this.editor.chain().focus();
+        switch (action) {
+            case 'add-row-before': chain.addRowBefore().run(); break;
+            case 'add-row-after': chain.addRowAfter().run(); break;
+            case 'delete-row': chain.deleteRow().run(); break;
+            case 'add-col-before': chain.addColumnBefore().run(); break;
+            case 'add-col-after': chain.addColumnAfter().run(); break;
+            case 'delete-col': chain.deleteColumn().run(); break;
+            case 'toggle-header-row': chain.toggleHeaderRow().run(); break;
+            case 'toggle-header-col': chain.toggleHeaderColumn().run(); break;
+            case 'delete-table': chain.deleteTable().run(); break;
+        }
+    }
+
+    showAboveTable(tableDom) {
+        if (!tableDom) return this.hide();
+        const tableRect = tableDom.getBoundingClientRect();
+        const menuRect = this.menuDiv.getBoundingClientRect();
+        const containerRect = this.container.getBoundingClientRect();
+
+        // Account for container scroll
+        const scrollTop = this.container.scrollTop;
+        const scrollLeft = this.container.scrollLeft;
+
+        // Position relative to container, including scroll
+        const left = tableRect.left - containerRect.left + scrollLeft + (tableRect.width - menuRect.width) / 2;
+        const top = tableRect.top - containerRect.top + scrollTop - menuRect.height - 8;
+
+        this.menuDiv.style.left = `${Math.max(left, 8)}px`;
+        this.menuDiv.style.top = `${Math.max(top, 8)}px`;
+        this.menuDiv.style.display = 'flex';
+    }
+
+    hide() {
+        this.menuDiv.style.display = 'none';
+        Object.values(this.dropdownRefs).forEach(ref => {
+            ref.menu.style.display = 'none';
+            ref.menu.classList.remove('flex');
+        });
+    }
+
+    update() {
+        if (!this.editor.options.editable || !this.editor.isActive('table')) {
+            this.hide();
+            return;
+        }
+        // Find the DOM node for the current table
+        const view = this.editor.view;
+        let dom = null;
+        view.dom.querySelectorAll('table').forEach(table => {
+            if (!dom && table.offsetParent !== null) dom = table;
+        });
+        if (dom) {
+            this.showAboveTable(dom);
+        } else {
+            this.hide();
+        }
+    }
+}
+
 class TiptapEditor extends HTMLElement {
     constructor() {
         super();
@@ -7,6 +274,7 @@ class TiptapEditor extends HTMLElement {
         this.editor = null;
         this.autoSaveTimeGap = 1000;
         this.autoSaveDebounce = null;
+        this.tableMenu = null;
     }
 
     connectedCallback() {
@@ -18,6 +286,7 @@ class TiptapEditor extends HTMLElement {
         this.renderShell();
         await this.loadContent();
         this.setupEditor();
+        this.tableMenu = new TableMenu(this.editor, this.shadowRoot.querySelector('.editor-container'));
     }
 
     _getTiptapStyles() {
@@ -1160,10 +1429,12 @@ class TiptapEditor extends HTMLElement {
             parentDOM: this.shadowRoot,
             onUpdate: ({ editor }) => {
                 this.updateFormattingSelections();
+                this.tableMenu.update();
             },
             onSelectionUpdate: ({ editor }) => {
                 this.autoSave();
                 this.updateFormattingSelections();
+                this.tableMenu.update();
             },
         });
 
