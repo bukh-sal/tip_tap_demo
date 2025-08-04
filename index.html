@@ -3,30 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tip Tap Demo</title>
+    <title>Web Component Editor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
 </head>
 <body>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        a {
-            display: block;
-            margin: 5px 0;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <div class="container">
+        <h1 class="pt-2">Web Component Editor</h1>
+        <p class="mb-0">This example uses a shadow DOM to encapsulate the editor styles so it can use independent styles (for example, using Tailwind for the component, while the project uses Bootstrap).</p>
+        <p>Using a shadow DOM could introduce some issues with extensions, and we'll find out soon enough.</p>
+    </div>
 
-    <a href="at_root.html">Tip Tap Editor</a>
-    <br>
-    <a href="wc_w_shadow.html">Tip Tap Editor in a Web Component with Shadow DOM</a>
-    <br>
-    <a href="wc_no_shadow.html">Tip Tap Editor in a Web Component without Shadow DOM</a>
-    <br>
+    <div class="container-fluid border-top pt-2">
+        <div class="row">
+            <div class="d-none d-md-block col-12 col-md-2">
+                <div class="card-body rounded-3 p-3 border">
+                    <h5>Dummy side bar</h5>
+                    <a href="list.html" class="btn btn-dark px-3 py-1 mt-1 mb-3 w-100">Back to Home</a>
+                    <p>There's no content here, nor is it really a side bar, we just want take away some space to simulate how an app might look</p>
+                    <br>
+                    <p>We can use this space to write down any issues we find due to the shadow DOM encapsulation.</p>
+                    <hr class="my-2 opacity-1">
+                    <h5>Issues</h5>
+                    <ul>
+                        <li>The drag extension has issues with visibility and positioning</li>
+                        <li>It turns out that adding Tailwind in a web component is a pain (I will just use CSS)</li>
+                    </ul>
+                </div>
+            </div>
 
+            <div class="col-12 col-md-10">
+                <tiptap-editor></tiptap-editor>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script type="module" src="/src/wc/editor_component_w_shadow.js"></script>
 </body>
 </html>
