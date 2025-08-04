@@ -1,4 +1,5 @@
 import { get_editor } from "./editor.js";
+import { defaultContent } from "../default_content.js";
 
 class TableMenu {
     constructor(editor, container) {
@@ -1396,13 +1397,13 @@ class TiptapEditor extends HTMLElement {
     }
 
     async loadContent() {
-        const defaultContent = '<p>Welcome to the Tiptap Editor!</p>';
+        this.content = defaultContent;
         if (localStorage.getItem('tiptap-editor-content')) {
             try {
                 this.content = JSON.parse(localStorage.getItem('tiptap-editor-content'));
             } catch (e) {
                 console.error('Failed to parse saved content, using default content.', e);
-                this.content = defaultContent;
+                this.content = content;
             }
         }
     }
