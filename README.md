@@ -1,6 +1,8 @@
 # Tiptap Demo
 
-A modern rich text editor demo built with [Tiptap](https://tiptap.dev/), Tailwind CSS, and Tailwind Plus Elements. This project demonstrates a customizable editor UI with advanced formatting controls and a floating table of contents.
+A modern rich text editor demo built with [Tiptap](https://tiptap.dev/), Tailwind CSS, and Tailwind Plus Elements. This project demonstrates a customizable editor UI with formatting controls.
+
+![Screenshot](./Screenshot.png)
 
 ## Features
 
@@ -9,6 +11,12 @@ A modern rich text editor demo built with [Tiptap](https://tiptap.dev/), Tailwin
 - **Responsive Design** using Tailwind CSS
 - **Modern UI** with backdrop blur, shadows, and custom fonts
 
+---
+
+### Demo
+You can try the live demo of the editor at [tip-tap-demo.vercel.app](https://tip-tap-demo.vercel.app/)
+
+---
 
 ### Installation
 
