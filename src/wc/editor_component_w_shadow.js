@@ -117,8 +117,15 @@ class TiptapEditor extends HTMLElement {
                 }
 
                 .tiptap.ProseMirror p {
+                    margin: 0;
                     font-size: 1.2rem;
-                    line-height: 1.2;
+                    line-height: 1;
+                    font-weight: 400;
+                }
+
+                .tiptap.ProseMirror p span {
+                    font-size: 1.2rem;
+                    line-height: 2;
                     font-weight: 400;
                 }
 
@@ -830,6 +837,38 @@ class TiptapEditor extends HTMLElement {
                 #insert-list-dropdown:popover-open {
                     display: block;
                 }
+
+
+                #top-bar-set-line-height-dropdown {
+                    anchor-name: --top_bar_set_line_height_dropdown_anchor;
+                }
+
+                #set-line-height-dropdown {
+                    margin: 0;
+                    margin-top: 10px;
+                    padding: 0.5rem;
+                    border-radius: 0.25rem;
+                    display: none;
+                    position-anchor: --top_bar_set_line_height_dropdown_anchor;
+                    top: anchor(--top_bar_set_line_height_dropdown_anchor bottom);
+                    left: anchor(--top_bar_set_line_height_dropdown_anchor center);
+                    background-color: rgba(255, 255, 255, 0.5);
+                    border: 1px solid #d1d5dc;
+                    backdrop-filter: blur(2px);
+
+                    h6 {
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: #000000a6;
+                        margin: 0;
+                        padding-bottom: 0.5rem;
+                        cursor: default;
+                        user-select: none;
+                    }
+                }
+                #set-line-height-dropdown:popover-open {
+                    display: block;
+                }
             </style>
         `;
     }
@@ -867,10 +906,10 @@ class TiptapEditor extends HTMLElement {
                 <div class="editor-container relative">
                     <div class="top-bar-container">
                         <div class="top-bar">
-                            <button class="editor-button" title="Bold" editor-action="undo">
+                            <button class="editor-button" title="Undo" editor-action="undo">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo2-icon lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
                             </button>
-                            <button class="editor-button" title="Bold" editor-action="redo">
+                            <button class="editor-button" title="Redo" editor-action="redo">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-redo2-icon lucide-redo-2"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5A5.5 5.5 0 0 0 4 14.5A5.5 5.5 0 0 0 9.5 20H13"/></svg>
                             </button>
 
@@ -933,51 +972,51 @@ class TiptapEditor extends HTMLElement {
 
                             <span class="buttons-separator"></span>
 
-                            <button type="button" editor-action="bold" class="editor-button" title="bold">
+                            <button type="button" editor-action="bold" class="editor-button" title="Bold">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bold-icon lucide-bold"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"></path></svg>
                             </button>
 
-                            <button type="button" editor-action="italic" class="editor-button" title="bold">
+                            <button type="button" editor-action="italic" class="editor-button" title="Italic">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-italic-icon lucide-italic"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg>
                             </button>
 
-                            <button type="button" editor-action="underline" class="editor-button" title="bold">
+                            <button type="button" editor-action="underline" class="editor-button" title="Underline">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-underline-icon lucide-underline"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>
                             </button>
 
-                            <button type="button" editor-action="strikethrough" class="editor-button" title="bold">
+                            <button type="button" editor-action="strikethrough" class="editor-button" title="Strikethrough">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-strikethrough-icon lucide-strikethrough"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
                             </button>
 
                             <span class="buttons-separator"></span>
 
-                            <button type="button" editor-action="quote" class="editor-button" title="bold">
+                            <button type="button" editor-action="quote" class="editor-button" title="Quote">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-quote-icon lucide-quote"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
                             </button>
 
-                            <button type="button" editor-action="code" class="editor-button" title="bold">
+                            <button type="button" editor-action="code" class="editor-button" title="Code">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-icon lucide-code"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>
                             </button>
 
-                            <button type="button" editor-action="link" class="editor-button" title="bold">
+                            <button type="button" editor-action="link" class="editor-button" title="Link">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link-icon lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                             </button>
 
                             <span class="buttons-separator"></span>
 
-                            <button type="button" editor-action="align-left" class="editor-button" title="bold">
+                            <button type="button" editor-action="align-left" class="editor-button" title="Left Align">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-left-icon lucide-align-left"><path d="M15 12H3"/><path d="M17 18H3"/><path d="M21 6H3"/></svg>
                             </button>
 
-                            <button type="button" editor-action="align-center" class="editor-button" title="bold">
+                            <button type="button" editor-action="align-center" class="editor-button" title="Center Align">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-center-icon lucide-align-center"><path d="M17 12H7"/><path d="M19 18H5"/><path d="M21 6H3"/></svg>
                             </button>
 
-                            <button type="button" editor-action="align-right" class="editor-button" title="bold">
+                            <button type="button" editor-action="align-right" class="editor-button" title="Right Align">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-right-icon lucide-align-right"><path d="M21 12H9"/><path d="M21 18H7"/><path d="M21 6H3"/></svg>
                             </button>
 
-                            <button type="button" editor-action="align-justify" class="editor-button" title="bold">
+                            <button type="button" editor-action="align-justify" class="editor-button" title="Justify Align">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify-icon lucide-align-justify"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>
                             </button>
 
@@ -998,29 +1037,44 @@ class TiptapEditor extends HTMLElement {
                                 </span>
                             </button>
 
+                            <button id="top-bar-set-line-height-dropdown" popovertarget="set-line-height-dropdown" class="editor-button" title="Line Height">
+                                <span style="display: flex; align-items: end;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+
                         </div>
 
                         <div id="insert-list-dropdown" popover>
                             <h6>Insert List</h6>
                             <div>
-                                <div>
-                                    <button class="editor-button" editor-action="bullet-list" style="margin-right: 0.5rem; display: flex; align-items: center;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-icon lucide-list"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>
-                                        <span style="margin-inline-start: 0.5rem;">Bullet List</span>
+                                <button class="editor-button" editor-action="bullet-list" style="margin-right: 0.5rem; display: flex; align-items: center; width: 100%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-icon lucide-list"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>
+                                    <span style="margin-inline-start: 0.5rem;">Bullet List</span>
+                                </button>
+                                <button class="editor-button" editor-action="ordered-list" style="margin-right: 0.5rem; display: flex; align-items: center; width: 100%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-ordered-icon lucide-list-ordered"><path d="M10 12h11"/><path d="M10 18h11"/><path d="M10 6h11"/><path d="M4 10h2"/><path d="M4 6h1v4"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+                                    <span style="margin-inline-start: 0.5rem;">Ordered List</span>
+                                </button>
+                                <button class="editor-button" editor-action="tasks-list" style="margin-right: 0.5rem; display: flex; align-items: center; width: 100%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-checks-icon lucide-list-checks"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+                                    <span style="margin-inline-start: 0.5rem;">Tasks List</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="set-line-height-dropdown" popover>
+                            <h6>Line Height</h6>
+                            <div>
+                                <button class="editor-button" editor-action="set-line-height" data-value="" style="color: #000000; display:flex; width: 100%; align-items: center; justify-content: center; border: 1px solid #f1f1f1; padding: 0.1rem; font-size: 15px;">
+                                    Default
+                                </button>
+                                ${[1.0, 1.15, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75].map(value => `
+                                    <button class="editor-button" editor-action="set-line-height" data-value="${value}" style="color: #000000; display:flex; width: 100%; align-items: center; justify-content: center; border: 1px solid #f1f1f1; padding: 0.1rem; font-size: 15px;">
+                                        ${value}
                                     </button>
-                                </div>
-                                <div>
-                                    <button class="editor-button" editor-action="ordered-list" style="margin-right: 0.5rem; display: flex; align-items: center;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-ordered-icon lucide-list-ordered"><path d="M10 12h11"/><path d="M10 18h11"/><path d="M10 6h11"/><path d="M4 10h2"/><path d="M4 6h1v4"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
-                                        <span style="margin-inline-start: 0.5rem;">Ordered List</span>
-                                    </button>
-                                </div>
-                                <div>
-                                    <button class="editor-button" editor-action="tasks-list" style="margin-right: 0.5rem; display: flex; align-items: center;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-checks-icon lucide-list-checks"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
-                                        <span style="margin-inline-start: 0.5rem;">Tasks List</span>
-                                    </button>
-                                </div>
+                                `).join('')}
                             </div>
                         </div>
 
@@ -1339,6 +1393,18 @@ class TiptapEditor extends HTMLElement {
         for (const button of tasksListButtons) {
           button.addEventListener('click', () => {
             this.editor.chain().focus().toggleTaskList().run();
+          });
+        }
+
+        const setLineHeightButtons = this.shadowRoot.querySelectorAll('[editor-action="set-line-height"]');
+        for (const button of setLineHeightButtons) {
+          button.addEventListener('click', (event) => {
+            const lineHeight = event.target.getAttribute('data-value');
+            if (lineHeight) {
+              this.editor.chain().focus().setLineHeight(lineHeight).run();
+            } else {
+                this.editor.chain().focus().unsetLineHeight().run();
+            }
           });
         }
         
