@@ -2,9 +2,10 @@ export const defaultContent = {
   "type": "doc",
   "content": [
     {
-      "type": "paragraph",
+      "type": "heading",
       "attrs": {
-        "textAlign": null
+        "textAlign": null,
+        "level": 2
       },
       "content": [
         {
@@ -15,19 +16,13 @@ export const defaultContent = {
               "attrs": {
                 "backgroundColor": "",
                 "color": "",
-                "fontFamily": "",
-                "fontSize": "32px",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "",
                 "lineHeight": ""
               }
-            },
-            {
-              "type": "bold"
-            },
-            {
-              "type": "underline"
             }
           ],
-          "text": "Fonts:"
+          "text": "Welcome to Tiptap Demo 😁"
         }
       ]
     },
@@ -44,14 +39,293 @@ export const defaultContent = {
               "type": "textStyle",
               "attrs": {
                 "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
-                "fontSize": "24px",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "20px",
                 "lineHeight": ""
               }
             }
           ],
-          "text": "System UI"
+          "text": "This editor supports rich text formatting, tables, images, lists, and more. Try out the toolbar above!"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "20px",
+                "lineHeight": ""
+              }
+            }
+          ],
+          "text": "Check the project on "
+        },
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "link",
+              "attrs": {
+                "href": "https://github.com/bukh-sal/tip_tap_demo/",
+                "target": "_blank",
+                "rel": "noopener noreferrer nofollow",
+                "class": null
+              }
+            },
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "20px",
+                "lineHeight": ""
+              }
+            }
+          ],
+          "text": "GitHub"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "20px",
+                "lineHeight": ""
+              }
+            }
+          ],
+          "text": "Learn More About "
+        },
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "link",
+              "attrs": {
+                "href": "https://tiptap.dev/",
+                "target": "_blank",
+                "rel": "noopener noreferrer nofollow",
+                "class": null
+              }
+            },
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "20px",
+                "lineHeight": ""
+              }
+            }
+          ],
+          "text": "Tiptap"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "horizontalRule"
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "heading",
+      "attrs": {
+        "textAlign": null,
+        "level": 3
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "",
+                "lineHeight": ""
+              }
+            }
+          ],
+          "text": "Formatting Examples"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "20px",
+                "lineHeight": ""
+              }
+            },
+            {
+              "type": "bold"
+            }
+          ],
+          "text": "I am Bold 😎"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "20px",
+                "lineHeight": ""
+              }
+            },
+            {
+              "type": "italic"
+            }
+          ],
+          "text": "I am Italic 😉"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "20px",
+                "lineHeight": ""
+              }
+            },
+            {
+              "type": "underline"
+            }
+          ],
+          "text": "whoaa what's that below me 😮"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "20px",
+                "lineHeight": ""
+              }
+            },
+            {
+              "type": "strike"
+            }
+          ],
+          "text": "scratch that 😜"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "rgb(0, 0, 255)",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "20px",
+                "lineHeight": ""
+              }
+            },
+            {
+              "type": "bold"
+            }
+          ],
+          "text": "Colorful"
         }
       ]
     },
@@ -70,12 +344,15 @@ export const defaultContent = {
                 "backgroundColor": "",
                 "color": "rgb(0, 0, 0)",
                 "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                "fontSize": "24px",
+                "fontSize": "20px",
                 "lineHeight": ""
               }
+            },
+            {
+              "type": "bold"
             }
           ],
-          "text": "IBM Plex Sans"
+          "text": "Colorful and important"
         }
       ]
     },
@@ -92,14 +369,39 @@ export const defaultContent = {
               "type": "textStyle",
               "attrs": {
                 "backgroundColor": "",
-                "color": "rgb(64, 64, 64)",
-                "fontFamily": "\"Noto Kufi Arabic\", sans-serif",
-                "fontSize": "24px",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "",
                 "lineHeight": ""
               }
             }
           ],
-          "text": "Noto Kufi"
+          "text": "How about a "
+        },
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "link",
+              "attrs": {
+                "href": "https://etamid.com/",
+                "target": "_blank",
+                "rel": "noopener noreferrer nofollow",
+                "class": null
+              }
+            },
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "",
+                "lineHeight": ""
+              }
+            }
+          ],
+          "text": "Link"
         }
       ]
     },
@@ -107,368 +409,233 @@ export const defaultContent = {
       "type": "paragraph",
       "attrs": {
         "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "\"Noto Sans Arabic\", sans-serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Noto Sans"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "\"Cascadia Code\", sans-serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Cascadia Code"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "\"Intel One Mono\", monospace",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Intel One Mono"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "Arial, sans-serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Arial"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "sans-serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Sans Serif"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Serif"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "Inter, sans-serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Inter"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "Rubik, sans-serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Rubik"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "Montserrat, sans-serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Montserrat"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "Roboto, sans-serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Roboto"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "\"Open Sans\", sans-serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Open Sans"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "Ubuntu, sans-serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Ubuntu"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "\"Times New Roman\", Times, serif",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Times New Roman"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "monospace",
-                "fontSize": "24px",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Monospace"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": "left"
       }
     },
     {
-      "type": "heading",
+      "type": "bulletList",
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "paragraph",
+              "attrs": {
+                "textAlign": null
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "backgroundColor": "",
+                        "color": "",
+                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                        "fontSize": "",
+                        "lineHeight": ""
+                      }
+                    }
+                  ],
+                  "text": "Item 1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "paragraph",
+              "attrs": {
+                "textAlign": null
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "backgroundColor": "",
+                        "color": "",
+                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                        "fontSize": "",
+                        "lineHeight": ""
+                      }
+                    }
+                  ],
+                  "text": "Item 2"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
       "attrs": {
-        "textAlign": null,
-        "level": 1
+        "textAlign": null
+      }
+    },
+    {
+      "type": "orderedList",
+      "attrs": {
+        "start": 1,
+        "type": null
       },
       "content": [
         {
-          "type": "text",
-          "marks": [
+          "type": "listItem",
+          "content": [
             {
-              "type": "textStyle",
+              "type": "paragraph",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                "fontSize": "",
-                "lineHeight": ""
-              }
+                "textAlign": null
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "backgroundColor": "",
+                        "color": "",
+                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                        "fontSize": "",
+                        "lineHeight": ""
+                      }
+                    }
+                  ],
+                  "text": "With number"
+                }
+              ]
             }
-          ],
-          "text": "Title"
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "paragraph",
+              "attrs": {
+                "textAlign": null
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "backgroundColor": "",
+                        "color": "",
+                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                        "fontSize": "",
+                        "lineHeight": ""
+                      }
+                    }
+                  ],
+                  "text": "And another one"
+                }
+              ]
+            }
+          ]
         }
       ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "taskList",
+      "content": [
+        {
+          "type": "taskItem",
+          "attrs": {
+            "checked": false
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "attrs": {
+                "textAlign": null
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "backgroundColor": "",
+                        "color": "",
+                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                        "fontSize": "",
+                        "lineHeight": ""
+                      }
+                    }
+                  ],
+                  "text": "important stuff"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "taskItem",
+          "attrs": {
+            "checked": false
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "attrs": {
+                "textAlign": null
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "backgroundColor": "",
+                        "color": "",
+                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                        "fontSize": "",
+                        "lineHeight": ""
+                      }
+                    }
+                  ],
+                  "text": "more stuff"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "horizontalRule"
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
     },
     {
       "type": "paragraph",
@@ -484,20 +651,215 @@ export const defaultContent = {
               "attrs": {
                 "backgroundColor": "",
                 "color": "",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
                 "fontSize": "",
                 "lineHeight": ""
               }
             }
           ],
-          "text": "Some text"
+          "text": "I set on the left"
         }
       ]
     },
     {
       "type": "paragraph",
       "attrs": {
-        "textAlign": "left"
+        "textAlign": "center"
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "",
+                "lineHeight": ""
+              }
+            }
+          ],
+          "text": "I am in the center"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": "right"
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "",
+                "lineHeight": ""
+              }
+            }
+          ],
+          "text": "I'm always right 😏"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "horizontalRule"
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "24px",
+                "lineHeight": ""
+              }
+            }
+          ],
+          "text": "Quote"
+        }
+      ]
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "backgroundColor": "",
+                    "color": "",
+                    "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                    "fontSize": "",
+                    "lineHeight": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "\"To be or not to be. That's not really a question.\""
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "link",
+                  "attrs": {
+                    "href": "https://www.brainyquote.com/authors/jean-luc-godard-quotes",
+                    "target": "_blank",
+                    "rel": "noopener noreferrer nofollow",
+                    "class": null
+                  }
+                },
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "backgroundColor": "",
+                    "color": "",
+                    "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                    "fontSize": "",
+                    "lineHeight": ""
+                  }
+                }
+              ],
+              "text": "Jean-Luc Godard"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "backgroundColor": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "24px",
+                "lineHeight": ""
+              }
+            }
+          ],
+          "text": "Code"
+        }
+      ]
+    },
+    {
+      "type": "codeBlock",
+      "attrs": {
+        "textAlign": null,
+        "language": "py"
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "# Install bitarray with: pip install bitarray\n\nfrom bitarray import bitarray\nimport time\nfrom math import sqrt\n\nPRIME_VALIDATION_COUNT = {\n    10          : 4,\n    100         : 25,\n    1_000       : 168,\n    10_000      : 1229,\n    100_000     : 9592,\n    1_000_000   : 78498,\n    10_000_000  : 664579,\n    100_000_000 : 5761455\n}\n\ndef get_primes(max_number):\n    start = time.perf_counter()\n\n    # Create a bitarray initialized to True\n    LOCATIONS = bitarray(max_number)\n    LOCATIONS.setall(True)\n    LOCATIONS[0] = LOCATIONS[1] = False  # 0 and 1 are not prime numbers\n\n    # Perform the sieve\n    for idx in range(2, int(sqrt(max_number)) + 1):\n        if LOCATIONS[idx]:  # If idx is prime\n            LOCATIONS[idx * idx:max_number:idx] = False  # Mark multiples as non-prime\n\n    # Collect all indices that are prime\n    primes = [index for index, is_prime in enumerate(LOCATIONS) if is_prime]\n    max_prime = primes[-1]\n\n    end = time.perf_counter()\n    took = end - start\n\n    print(f\"Found {len(primes):,} primes for max {max_number:,} in {took:,.2f} seconds, max prime is {max_prime:,}\")\n\n    return primes\n\n# Testing with different values of max_number\nget_primes(10)\nget_primes(100)\nget_primes(1000)\nget_primes(10000)\nget_primes(100000)\nget_primes(1000000)\nget_primes(10000000)\nget_primes(100000000)"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
       }
     },
     {
@@ -512,7 +874,7 @@ export const defaultContent = {
                 "colspan": 1,
                 "rowspan": 1,
                 "colwidth": [
-                  48
+                  60
                 ]
               },
               "content": [
@@ -525,6 +887,16 @@ export const defaultContent = {
                     {
                       "type": "text",
                       "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "backgroundColor": "",
+                            "color": "",
+                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                            "fontSize": "",
+                            "lineHeight": ""
+                          }
+                        },
                         {
                           "type": "bold"
                         }
@@ -541,94 +913,7 @@ export const defaultContent = {
                 "colspan": 1,
                 "rowspan": 1,
                 "colwidth": [
-                  136
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": "left"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "marks": [
-                        {
-                          "type": "bold"
-                        }
-                      ],
-                      "text": "Column 1"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "tableHeader",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  139
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": "left"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "marks": [
-                        {
-                          "type": "bold"
-                        }
-                      ],
-                      "text": "Column 2"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "tableHeader",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  143
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": "left"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "marks": [
-                        {
-                          "type": "bold"
-                        }
-                      ],
-                      "text": "Column 3"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "tableHeader",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  101
+                  203
                 ]
               },
               "content": [
@@ -636,7 +921,28 @@ export const defaultContent = {
                   "type": "paragraph",
                   "attrs": {
                     "textAlign": null
-                  }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "backgroundColor": "",
+                            "color": "",
+                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                            "fontSize": "",
+                            "lineHeight": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "Name"
+                    }
+                  ]
                 }
               ]
             },
@@ -646,7 +952,7 @@ export const defaultContent = {
                 "colspan": 1,
                 "rowspan": 1,
                 "colwidth": [
-                  94
+                  278
                 ]
               },
               "content": [
@@ -654,7 +960,28 @@ export const defaultContent = {
                   "type": "paragraph",
                   "attrs": {
                     "textAlign": null
-                  }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "backgroundColor": "",
+                            "color": "",
+                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                            "fontSize": "",
+                            "lineHeight": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "Role"
+                    }
+                  ]
                 }
               ]
             }
@@ -664,12 +991,12 @@ export const defaultContent = {
           "type": "tableRow",
           "content": [
             {
-              "type": "tableHeader",
+              "type": "tableCell",
               "attrs": {
                 "colspan": 1,
                 "rowspan": 1,
                 "colwidth": [
-                  48
+                  60
                 ]
               },
               "content": [
@@ -681,6 +1008,18 @@ export const defaultContent = {
                   "content": [
                     {
                       "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "backgroundColor": "",
+                            "color": "",
+                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                            "fontSize": "",
+                            "lineHeight": ""
+                          }
+                        }
+                      ],
                       "text": "1"
                     }
                   ]
@@ -693,7 +1032,7 @@ export const defaultContent = {
                 "colspan": 1,
                 "rowspan": 1,
                 "colwidth": [
-                  136
+                  203
                 ]
               },
               "content": [
@@ -705,7 +1044,19 @@ export const defaultContent = {
                   "content": [
                     {
                       "type": "text",
-                      "text": "Hello"
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "backgroundColor": "",
+                            "color": "",
+                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                            "fontSize": "",
+                            "lineHeight": ""
+                          }
+                        }
+                      ],
+                      "text": "Alice"
                     }
                   ]
                 }
@@ -717,7 +1068,7 @@ export const defaultContent = {
                 "colspan": 1,
                 "rowspan": 1,
                 "colwidth": [
-                  139
+                  278
                 ]
               },
               "content": [
@@ -729,69 +1080,21 @@ export const defaultContent = {
                   "content": [
                     {
                       "type": "text",
-                      "text": "There"
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "backgroundColor": "",
+                            "color": "",
+                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                            "fontSize": "",
+                            "lineHeight": ""
+                          }
+                        }
+                      ],
+                      "text": "Admin"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "type": "tableCell",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  143
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": null
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "text": "😁"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "tableCell",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  101
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": null
-                  }
-                }
-              ]
-            },
-            {
-              "type": "tableCell",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  94
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": null
-                  }
                 }
               ]
             }
@@ -801,12 +1104,12 @@ export const defaultContent = {
           "type": "tableRow",
           "content": [
             {
-              "type": "tableHeader",
+              "type": "tableCell",
               "attrs": {
                 "colspan": 1,
                 "rowspan": 1,
                 "colwidth": [
-                  48
+                  60
                 ]
               },
               "content": [
@@ -818,6 +1121,18 @@ export const defaultContent = {
                   "content": [
                     {
                       "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "backgroundColor": "",
+                            "color": "",
+                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                            "fontSize": "",
+                            "lineHeight": ""
+                          }
+                        }
+                      ],
                       "text": "2"
                     }
                   ]
@@ -830,7 +1145,7 @@ export const defaultContent = {
                 "colspan": 1,
                 "rowspan": 1,
                 "colwidth": [
-                  136
+                  203
                 ]
               },
               "content": [
@@ -838,106 +1153,23 @@ export const defaultContent = {
                   "type": "paragraph",
                   "attrs": {
                     "textAlign": null
-                  }
-                }
-              ]
-            },
-            {
-              "type": "tableCell",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  139
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": null
-                  }
-                }
-              ]
-            },
-            {
-              "type": "tableCell",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  143
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": null
-                  }
-                }
-              ]
-            },
-            {
-              "type": "tableCell",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  101
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": null
-                  }
-                }
-              ]
-            },
-            {
-              "type": "tableCell",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  94
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": null
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "tableRow",
-          "content": [
-            {
-              "type": "tableHeader",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  48
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": "center"
                   },
                   "content": [
                     {
                       "type": "text",
-                      "text": "3"
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "backgroundColor": "",
+                            "color": "",
+                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                            "fontSize": "",
+                            "lineHeight": ""
+                          }
+                        }
+                      ],
+                      "text": "Bob"
                     }
                   ]
                 }
@@ -949,7 +1181,7 @@ export const defaultContent = {
                 "colspan": 1,
                 "rowspan": 1,
                 "colwidth": [
-                  136
+                  278
                 ]
               },
               "content": [
@@ -957,236 +1189,31 @@ export const defaultContent = {
                   "type": "paragraph",
                   "attrs": {
                     "textAlign": null
-                  }
-                }
-              ]
-            },
-            {
-              "type": "tableCell",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  139
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": null
-                  }
-                }
-              ]
-            },
-            {
-              "type": "tableCell",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  143
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": null
-                  }
-                }
-              ]
-            },
-            {
-              "type": "tableCell",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  101
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": null
-                  }
-                }
-              ]
-            },
-            {
-              "type": "tableCell",
-              "attrs": {
-                "colspan": 1,
-                "rowspan": 1,
-                "colwidth": [
-                  94
-                ]
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": null
-                  }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "backgroundColor": "",
+                            "color": "",
+                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                            "fontSize": "",
+                            "lineHeight": ""
+                          }
+                        }
+                      ],
+                      "text": "User"
+                    }
+                  ]
                 }
               ]
             }
           ]
         }
       ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                "fontSize": "",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "This is a link to "
-        },
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "link",
-              "attrs": {
-                "href": "https://google.com",
-                "target": "_blank",
-                "rel": "noopener noreferrer nofollow",
-                "class": null
-              }
-            },
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                "fontSize": "",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Google"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                "fontSize": "",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "This is a link to "
-        },
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "link",
-              "attrs": {
-                "href": "https://yahoo.com",
-                "target": "_blank",
-                "rel": "noopener noreferrer nofollow",
-                "class": null
-              }
-            },
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                "fontSize": "",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Yahoo"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      }
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                "fontSize": "32px",
-                "lineHeight": ""
-              }
-            },
-            {
-              "type": "bold"
-            }
-          ],
-          "text": "Some images"
-        }
-      ]
-    },
-    {
-      "type": "image",
-      "attrs": {
-        "src": "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg",
-        "alt": null,
-        "title": null,
-        "width": null,
-        "height": null
-      }
-    },
-    {
-      "type": "image",
-      "attrs": {
-        "src": "https://images.pexels.com/photos/18069696/pexels-photo-18069696.png",
-        "alt": null,
-        "title": null,
-        "width": null,
-        "height": null
-      }
     },
     {
       "type": "paragraph",
@@ -1201,58 +1228,12 @@ export const defaultContent = {
       "type": "paragraph",
       "attrs": {
         "textAlign": null
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": null,
-                "color": null,
-                "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                "fontSize": "32px",
-                "lineHeight": null
-              }
-            },
-            {
-              "type": "bold"
-            }
-          ],
-          "text": "Some Code"
-        }
-      ]
-    },
-    {
-      "type": "codeBlock",
-      "attrs": {
-        "textAlign": null,
-        "language": "py"
-      },
-      "content": [
-        {
-          "type": "text",
-          "text": "import time\nfrom math import sqrt\n\nPRIME_VALIDATION_COUNT = {\n    10          : 4,\n    100         : 25,\n    1_000       : 168,\n    10_000      : 1229,\n    100_000     : 9592,\n    1_000_000   : 78498,\n    10_000_000  : 664579,\n    100_000_000 : 5761455\n}\n\nLOCATIONS = []\n\ndef get_primes(max_number):\n    global LOCATIONS\n\n    start = time.perf_counter()\n    LOCATIONS = [True] * max_number\n    LOCATIONS[0] = LOCATIONS[1] = False  # 0 and 1 are not prime numbers\n\n    for idx in range(2, int(sqrt(max_number)) + 1):\n        if LOCATIONS[idx]:  # If idx is prime\n            for multiple in range(idx * idx, max_number, idx):\n                LOCATIONS[multiple] = False  # Mark multiples as non-prime\n\n\n    # Collect all indices that are prime\n    primes = [index for index, is_prime in enumerate(LOCATIONS) if is_prime]\n    max_prime = primes[-1]\n\n    end = time.perf_counter()\n    took = end - start\n\n    print(f\"Found {len(primes):,} primes for max {max_number:,} in {took:,.2f} seconds, max prime is {max_prime:,}\")\n\n    return primes\n\n# Testing with different values of max_number\nget_primes(10)\nget_primes(100)\nget_primes(1000)\nget_primes(10000)\nget_primes(100000)\nget_primes(1000000)\nget_primes(10000000)\nget_primes(100000000)\nget_primes(1000000000)"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": "left"
       }
     },
     {
       "type": "paragraph",
       "attrs": {
-        "textAlign": "left"
-      }
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": "left"
+        "textAlign": null
       },
       "content": [
         {
@@ -1262,85 +1243,37 @@ export const defaultContent = {
               "type": "textStyle",
               "attrs": {
                 "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                "fontSize": "",
+                "color": "",
+                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "fontSize": "24px",
                 "lineHeight": ""
               }
             }
           ],
-          "text": "Graph Neural Networks (GNNs) are a class of neural networks designed to work with graph-structured data."
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": "left"
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                "fontSize": "",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "Graphs consist of nodes (vertices) and edges, representing entities and their relationships."
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": "left"
-      },
-      "content": [
-        {
-          "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                "fontSize": "",
-                "lineHeight": ""
-              }
-            }
-          ],
-          "text": "GNNs are particularly useful for tasks where data is naturally represented as a graph, such as social networks, molecular structures, and recommendation systems."
+          "text": "Hey look, a photo 🤩"
         }
       ]
     },
     {
       "type": "image",
       "attrs": {
-        "src": "https://quantrasolutions.com/wp-content/uploads/Image-11.png",
-        "alt": "",
+        "src": "https://images.pexels.com/photos/17483907/pexels-photo-17483907.png",
+        "alt": null,
         "title": null,
-        "width": 1972,
-        "height": 1105
+        "width": null,
+        "height": null
       }
     },
     {
       "type": "paragraph",
       "attrs": {
-        "textAlign": "left"
+        "textAlign": null
       }
     },
     {
       "type": "paragraph",
       "attrs": {
-        "textAlign": "left"
+        "textAlign": null
       }
     }
   ]
