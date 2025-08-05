@@ -276,6 +276,55 @@ class TiptapEditor extends HTMLElement {
         this.autoSaveTimeGap = 1000;
         this.autoSaveDebounce = null;
         this.tableMenu = null;
+        this.bubbleMenuContainer = null;
+        this.fontOptions = {
+            "Default Font"    : "",
+            "System UI"       : "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            "IBM Plex Sans"   : "'IBM Plex Sans Arabic', monospace",
+            "Noto Kufi"       : "'Noto Kufi Arabic', sans-serif",
+            "Noto Sans"       : "'Noto Sans Arabic', sans-serif",
+            "Cascadia Code"   : "'Cascadia Code', sans-serif",
+            "Intel One Mono"  : "'Intel One Mono', monospace",
+            "Arial"           : "Arial, sans-serif",
+            "Sans-serif"      : "sans-serif",
+            "Serif"           : "serif",
+            "Inter"           : "'Inter', sans-serif",
+            "Rubik"           : "'Rubik', sans-serif",
+            "Montserrat"      : "'Montserrat', sans-serif",
+            "Roboto"          : "'Roboto', sans-serif",
+            "Open Sans"       : "'Open Sans', sans-serif",
+            "Ubuntu"          : "'Ubuntu', sans-serif",
+            "Times New Roman" : "'Times New Roman', Times, serif",
+            "Monospace"       : "monospace",
+        };
+        this.headingOptions = {
+            "Heading 1": "1",
+            "Heading 2": "2",
+            "Heading 3": "3",
+            "Heading 4": "4",
+            "Heading 5": "5",
+            "Heading 6": "6",
+        }
+        // font sizes
+        const fontSizeOptions = Array.from({ length: 30 }, (_, i) => `${12 + i * 4}px`);
+        this.fontSizeOptions = {
+            "Default Size": "",
+        }
+        fontSizeOptions.forEach(size => {
+            this.fontSizeOptions[size] = size;
+        });
+        
+        this.textColorOptions = [
+            '#000000', '#404040', '#808080', '#c0c0c0', '#e0e0e0',
+            '#ffffff', '#ff0000', '#00ff00', '#0000ff', '#ffff00',
+            '#ff00ff', '#00ffff', '#0078d4', '#107c41', '#d83b01',
+            '#f2c811', '#742774', '#00a99d', '#c43e1c', '#077568',
+            '#bc1948', '#49aae5', '#853d90', '#527f13', 
+        ]
+        this.textHighlightOptions = [
+            '#F8FF00', '#A41A1A', '#10FF00', '#00FFD9', '#49aae5',
+            '#ff0000',
+        ]
     }
 
     connectedCallback() {
@@ -1144,13 +1193,133 @@ class TiptapEditor extends HTMLElement {
         `;
     }
 
+    _getBubbleMenuStyles() {
+        return `
+            <style>
+                .bubble-menu-container {
+                    background-color: rgba(255, 255, 255, 0.5);
+                    border: 1px solid #d1d5dc;
+                    backdrop-filter: blur(2px);
+                    border-radius: 0.375rem;
+                    padding-inline: 0px;
+                    padding-block: 0px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.1rem;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    z-index: 1000;
+                }
+            </style>
+        `;
+    }
+
+    _createBubbleMenu() {
+        const bubbleMenuContainer = this.shadowRoot.querySelector('.bubble-menu-container');
+        const bubbleMenuButtons = [
+            {
+                "editor-action": 'select-font-family',
+                "title": "Select Font Family",
+                "type": "select",
+                "options": this.fontOptions,
+            },
+            {
+                "editor-action": 'select-font-size',
+                "title": "Select Font Size",
+                "type": "select",
+                "options": this.fontSizeOptions,
+            },
+            {
+                "editor-action": '',
+                "icon": '',
+                "title": "",
+                "type": "separator",
+            },
+            {
+                "editor-action": 'bold',
+                "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bold-icon lucide-bold"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></svg>',
+                "title": "Bold",
+                "type": "button",
+            },
+            {
+                "editor-action": 'italic',
+                "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-italic-icon lucide-italic"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg>',
+                "title": "Italic",
+                "type": "button",
+            },
+            {
+                "editor-action": 'underline',
+                "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-underline-icon lucide-underline"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>',
+                "title": "Underline",
+                "type": "button",
+            },
+            {
+                "editor-action": '',
+                "icon": '',
+                "title": "",
+                "type": "separator",
+            },
+            {
+                "editor-action": 'align-left',
+                "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-left-icon lucide-align-left"><path d="M15 12H3"/><path d="M17 18H3"/><path d="M21 6H3"/></svg>',
+                "title": "Align Left",
+                "type": "button",
+            },
+            {
+                "editor-action": 'align-center',
+                "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-center-icon lucide-align-center"><path d="M17 12H7"/><path d="M19 18H5"/><path d="M21 6H3"/></svg>',
+                "title": "Align Center",
+                "type": "button",
+            },
+            {
+                "editor-action": 'align-right',
+                "icon": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-right-icon lucide-align-right"><path d="M21 12H9"/><path d="M21 18H7"/><path d="M21 6H3"/></svg>',
+                "title": "Align Right",
+                "type": "button",
+            },
+        ];
+
+        bubbleMenuButtons.forEach(item => {
+            let newItem = null;
+
+            if (item.type === 'select') {
+                newItem = document.createElement('select');
+                newItem.className = 'editor-select';
+                newItem.setAttribute('editor-action', item['editor-action']);
+                Object.entries(item.options).forEach(([key, value]) => {
+                    const option = document.createElement('option');
+                    option.value = value;
+                    option.textContent = key;
+                    newItem.appendChild(option);
+                });
+            } else if (item.type === 'button') {
+                newItem = document.createElement('button');
+                newItem.className = 'editor-button';
+                newItem.setAttribute('editor-action', item['editor-action']);
+                newItem.title = item.title;
+                newItem.innerHTML = item.icon;
+            } else if (item.type === 'separator') {
+                newItem = document.createElement('span');
+                newItem.className = 'buttons-separator';
+            }
+
+            bubbleMenuContainer.appendChild(newItem);
+        });
+        bubbleMenuContainer.style.visibility = 'hidden';
+        this.bubbleMenuContainer = bubbleMenuContainer;
+    }
+
     injectStyles() {
         // CDNs
         this.shadowRoot.innerHTML = `
             ${this._getFontStyles()}
             ${this._getTiptapStyles()}
             ${this._getEditorStyles()}
+            ${this._getBubbleMenuStyles()}
+            <div class="bubble-menu-container"></div>
         `;
+        this._createBubbleMenu();
     }
 
     renderShell() {
@@ -1187,51 +1356,24 @@ class TiptapEditor extends HTMLElement {
                             <span class="buttons-separator"></span>
 
                             <select editor-action="select-font-family" class="editor-select">
-                                <option value="" selected>Default Font</option>
-                                <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">System UI</option>
-                                <option value="'IBM Plex Sans Arabic', monospace;">IBM Plex Sans</option>
-                                <option value="'Noto Kufi Arabic', sans-serif">Noto Kufi</option>
-                                <option value="'Noto Sans Arabic', sans-serif">Noto Sans</option>
-                                <option value="'Cascadia Code', sans-serif;">Cascadia Code</option>
-                                <option value="'Intel One Mono', monospace;">Intel One Mono</option>
-                                <option value="Arial, sans-serif">Arial</option>
-                                <option value="sans-serif">Sans-serif</option>
-                                <option value="serif">Serif</option>
-                                <option value="'Inter', sans-serif">Inter</option>
-                                <option value="'Rubik', sans-serif;">Rubik</option>
-                                <option value="'Montserrat', sans-serif;">Montserrat</option>
-                                <option value="'Roboto', sans-serif;">Roboto</option>
-                                <option value="'Open Sans', sans-serif;">Open Sans</option>
-                                <option value="'Ubuntu', sans-serif;">Ubuntu</option>
-                                <option value="'Times New Roman', Times, serif">Times New Roman</option>
-                                <option value="monospace">Monospace</option>
+                                ${Object.entries(this.fontOptions).map(([key, value]) => `
+                                    <option value="${value}" ${key === 'default' ? 'selected' : ''}>${key}</option>
+                                `).join('')}
                             </select>
 
                             <select editor-action="select-font-size" class="editor-select">
                                 <option editor-action="clear-font-size" value="">Default Size</option>
-                                <option editor-action="set-heading" value="1">Heading 1</option>
-                                <option editor-action="set-heading" value="2">Heading 2</option>
-                                <option editor-action="set-heading" value="3">Heading 3</option>
-                                <option editor-action="set-heading" value="4">Heading 4</option>
-                                <option editor-action="set-heading" value="5">Heading 5</option>
-                                <option editor-action="set-heading" value="6">Heading 6</option>
-                                <option editor-action="set-pixel-size" value="12px">12px</option>
-                                <option editor-action="set-pixel-size" value="14px">14px</option>
-                                <option editor-action="set-pixel-size" value="16px">16px</option>
-                                <option editor-action="set-pixel-size" value="18px">18px</option>
-                                <option editor-action="set-pixel-size" value="20px">20px</option>
-                                <option editor-action="set-pixel-size" value="24px">24px</option>
-                                <option editor-action="set-pixel-size" value="32px">32px</option>
-                                <option editor-action="set-pixel-size" value="36px">36px</option>
-                                <option editor-action="set-pixel-size" value="40px">40px</option>
-                                <option editor-action="set-pixel-size" value="48px">48px</option>
-                                <option editor-action="set-pixel-size" value="56px">56px</option>
-                                <option editor-action="set-pixel-size" value="64px">64px</option>
-                                <option editor-action="set-pixel-size" value="72px">72px</option>
-                                <option editor-action="set-pixel-size" value="80px">80px</option>
-                                <option editor-action="set-pixel-size" value="96px">96px</option>
-                                <option editor-action="set-pixel-size" value="128px">128px</option>
-                                <option editor-action="set-pixel-size" value="160px">160px</option>
+
+                                ${Object.entries(this.headingOptions).map(([key, value]) => `
+                                    <option editor-action="set-heading" value="${value}">${key}</option>
+                                `).join('')
+                                }
+
+                                ${Object.entries(this.fontSizeOptions).map(([size, value]) => `
+                                    <option editor-action="set-pixel-size" value="${value}">${size}</option>
+                                `).join('')
+                                }
+
                             </select>
 
                             <button id="top-bar-text-color-picker" popovertarget="text-color-picker" class="editor-button" title="Text Color">
@@ -1315,6 +1457,10 @@ class TiptapEditor extends HTMLElement {
                                 </span>
                             </button>
 
+                            <button type="button" editor-action="clear-formatting" class="editor-button" title="Clear Formatting">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                            </button>
+
                         </div>
 
                         <div id="insert-list-dropdown" popover>
@@ -1352,41 +1498,18 @@ class TiptapEditor extends HTMLElement {
                         <div id="text-color-picker" popover>
                             <h6>Colors</h6>
                             <div class="color-swatch-grid">
-                                <button class="color-swatch" style="background-color: #000000;" data-color="#000000"></button>
-                                <button class="color-swatch" style="background-color: #404040;" data-color="#404040"></button>
-                                <button class="color-swatch" style="background-color: #808080;" data-color="#808080"></button>
-                                <button class="color-swatch" style="background-color: #c0c0c0;" data-color="#c0c0c0"></button>
-                                <button class="color-swatch" style="background-color: #e0e0e0;" data-color="#e0e0e0"></button>
-                                <button class="color-swatch" style="background-color: #ffffff;" data-color="#ffffff"></button>
-                                <button class="color-swatch" style="background-color: #ff0000;" data-color="#ff0000"></button>
-                                <button class="color-swatch" style="background-color: #00ff00;" data-color="#00ff00"></button>
-                                <button class="color-swatch" style="background-color: #0000ff;" data-color="#0000ff"></button>
-                                <button class="color-swatch" style="background-color: #ffff00;" data-color="#ffff00"></button>
-                                <button class="color-swatch" style="background-color: #ff00ff;" data-color="#ff00ff"></button>
-                                <button class="color-swatch" style="background-color: #00ffff;" data-color="#00ffff"></button>
-                                <button class="color-swatch" style="background-color: #0078d4;" data-color="#0078d4"></button>
-                                <button class="color-swatch" style="background-color: #107c41;" data-color="#107c41"></button>
-                                <button class="color-swatch" style="background-color: #d83b01;" data-color="#d83b01"></button>
-                                <button class="color-swatch" style="background-color: #f2c811;" data-color="#f2c811"></button>
-                                <button class="color-swatch" style="background-color: #742774;" data-color="#742774"></button>
-                                <button class="color-swatch" style="background-color: #00a99d;" data-color="#00a99d"></button>
-                                <button class="color-swatch" style="background-color: #c43e1c;" data-color="#c43e1c"></button>
-                                <button class="color-swatch" style="background-color: #077568;" data-color="#077568"></button>
-                                <button class="color-swatch" style="background-color: #bc1948;" data-color="#bc1948"></button>
-                                <button class="color-swatch" style="background-color: #49aae5;" data-color="#49aae5"></button>
-                                <button class="color-swatch" style="background-color: #853d90;" data-color="#853d90"></button>
-                                <button class="color-swatch" style="background-color: #527f13;" data-color="#527f13"></button>
+                                ${this.textColorOptions.map(color => `
+                                    <button class="color-swatch" style="background-color: ${color};" editor-action="set-text-color" data-value="${color}"></button>
+                                `).join('')
+                                }
                             </div>
                             <h6>Highlight</h6>
                             <div class="color-swatch-grid">
-                                <button class="highlight-swatch" style="background-color: #ffffff;" data-color=""></button>
-                                <button class="highlight-swatch" style="background-color: #F8FF00;" data-color="#F8FF00"></button>
-                                <button class="highlight-swatch" style="background-color: #A41A1A;" data-color="#A41A1A"></button>
-                                <button class="highlight-swatch" style="background-color: #10FF00;" data-color="#10FF00"></button>
-                                <button class="highlight-swatch" style="background-color: #00FFD9;" data-color="#00FFD9"></button>
-                                <button class="highlight-swatch" style="background-color: #49aae5;" data-color="#49aae5"></button>
-                                <button class="highlight-swatch" style="background-color: #ff0000;" data-color="#ff0000"></button>
-
+                                <button class="highlight-swatch" style="background-color: #ffffff;" editor-action="set-text-highlight" data-value=""></button>
+                                ${this.textHighlightOptions.map(color => `
+                                    <button class="highlight-swatch" style="background-color: ${color};" editor-action="set-text-highlight" data-value="${color}"></button>
+                                `).join('')
+                                }
                             </div>
                         </div>
 
@@ -1438,11 +1561,20 @@ class TiptapEditor extends HTMLElement {
                 this.updateFormattingSelections();
                 this.tableMenu.update();
             },
+            bubbleMenuConfig: {
+                element: this.bubbleMenuContainer,
+                shouldShow: ({ editor, view, state, from, to }) => {
+                    let r = from !== to && editor.isFocused;
+                    if (r) {
+                        setTimeout(() => {
+                            this.updateFormattingSelections();
+                        }, 5);
+                        this.bubbleMenuContainer.style.visibility = 'visible';
+                    }
+                    return r;
+                },
+            }
         });
-
-        if (!this.editor) {
-            console.error('Failed to initialize the editor');
-        }
         this.bindControls();
     }
 
@@ -1468,223 +1600,205 @@ class TiptapEditor extends HTMLElement {
         };
     }
 
+    bindClickEvents() {
+        this.shadowRoot.addEventListener('click', (event) => {
+            const path = event.composedPath();
+            let realTarget = path.find(node => node !== this.shadowRoot && node.nodeType === 1);
+            let action = null;
+            if (!realTarget) return;
+            if (realTarget) action = realTarget.getAttribute('editor-action');
+
+            if (!action) {
+                let atRoot = false;
+                while (!action && !atRoot) {
+                    if (realTarget === this.shadowRoot) {
+                        atRoot = true;
+                    } else {
+                        action = realTarget.getAttribute('editor-action');
+                        if (!action) {
+                            realTarget = realTarget.parentElement;
+                            if (!realTarget) {
+                                atRoot = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!action) return;
+            if (!realTarget || realTarget.tagName != 'BUTTON') return;
+
+            const value = realTarget.getAttribute('data-value') || null;
+
+            const data = { "type": "button", "action": action, "target": realTarget, "value": value };
+            console.log(data);
+            this.runEditorAction(data);
+        });
+    }
+
+    bindChangeEvents() {
+        this.shadowRoot.addEventListener('change', (event) => {
+            const path = event.composedPath();
+            let realTarget = path.find(node => node !== this.shadowRoot && node.nodeType === 1);
+            if (!realTarget) return;
+
+            let action = realTarget.getAttribute('editor-action');
+            while (!action && realTarget && realTarget.parentElement && realTarget.parentElement !== this.shadowRoot) {
+                realTarget = realTarget.parentElement;
+                action = realTarget.getAttribute('editor-action');
+            }
+            if (!action) return;
+            const data = { "type": "select", "action": action, "target": realTarget, "value": realTarget.value };
+            this.runEditorAction(data);
+        });
+    }
+
     bindControls() {
         this.bindKeyboardShortcuts();
-
-        const addImageButton = this.shadowRoot.querySelectorAll('[editor-action="add-image"]');
-        for (const button of addImageButton) {
-          button.addEventListener('click', () => {
-            const imageUrl = prompt('Enter image URL:');
-            if (imageUrl) {
-              this.editor.chain().focus().setImage({ src: imageUrl }).run();
-            }
-          });
-        }
-
-        const addTableButtons = this.shadowRoot.querySelectorAll('[editor-action="add-table"]');
-        for (const button of addTableButtons) {
-          button.addEventListener('click', () => {
-            const rows = parseInt(prompt('Enter number of rows:', '3'));
-            const cols = parseInt(prompt('Enter number of columns:', '3'));
-            if (!isNaN(rows) && !isNaN(cols) && rows > 0 && cols > 0) {
-              this.editor.chain().focus().insertTable({ rows, cols, withHeaderRow: true }).run();
-            }
-          });
-        }
-
-        const boldButtons = this.shadowRoot.querySelectorAll('[editor-action="bold"]');
-        for (const button of boldButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().toggleBold().run();
-          });
-        }
-
-        const italicButtons = this.shadowRoot.querySelectorAll('[editor-action="italic"]');
-        for (const button of italicButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().toggleItalic().run();
-          });
-        }
-
-        const quoteButtons = this.shadowRoot.querySelectorAll('[editor-action="quote"]');
-        for (const button of quoteButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().toggleBlockquote().run();
-          });
-        }
-
-        const strikethroughButtons = this.shadowRoot.querySelectorAll('[editor-action="strikethrough"]');
-        for (const button of strikethroughButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().toggleStrike().run();
-          });
-        }
-
-        const underlineButtons = this.shadowRoot.querySelectorAll('[editor-action="underline"]');
-        for (const button of underlineButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().toggleUnderline().run();
-          });
-        }
-
-        const codeButtons = this.shadowRoot.querySelectorAll('[editor-action="code"]');
-        for (const button of codeButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().toggleCodeBlock().run();
-          });
-        }
-
-        const linkButtons = this.shadowRoot.querySelectorAll('[editor-action="link"]');
-        for (const button of linkButtons) {
-          button.addEventListener('click', () => {
-            const linkUrl = prompt('Enter link URL:');
-            if (linkUrl) {
-              this.editor.chain().focus().setLink({ href: linkUrl }).run();
-            }
-          });
-        }
-
-        const fontSizeSelects = this.shadowRoot.querySelectorAll('[editor-action="select-font-size"]');
-        for (const select of fontSizeSelects) {
-          // we have 3 types of editor actions for the options (clear-font-size, set-heading, set-pixel-size)
-          select.addEventListener('change', (event) => {
-            const selectedOption = event.target.options[event.target.selectedIndex];
-            const actionType = selectedOption.getAttribute('editor-action');
-            if (actionType === 'clear-font-size') {
-                this.editor.chain().focus().setNode('paragraph').run();
-                this.editor.chain().focus().unsetFontSize().run();
-            }
-            else if (actionType === 'set-pixel-size') {
-              this.editor.chain().focus().setNode('paragraph').run();
-              this.editor.chain().focus().setFontSize(selectedOption.value).run();
-            }
-            else if (actionType === 'set-heading') {
-              this.editor.chain().focus().unsetFontSize().run();
-              this.editor.chain().focus().setHeading({ level: parseInt(selectedOption.value) }).run();
-            }
-          });
-        }
-
-        const alignLeftButtons = this.shadowRoot.querySelectorAll('[editor-action="align-left"]');
-        for (const button of alignLeftButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().setTextAlign('left').run();
-          });
-        }
-
-        const alignCenterButtons = this.shadowRoot.querySelectorAll('[editor-action="align-center"]');
-        for (const button of alignCenterButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().setTextAlign('center').run();
-          });
-        }
-
-        const alignRightButtons = this.shadowRoot.querySelectorAll('[editor-action="align-right"]');
-        for (const button of alignRightButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().setTextAlign('right').run();
-          });
-        }
-
-        const alignJustifyButtons = this.shadowRoot.querySelectorAll('[editor-action="align-justify"]');
-        for (const button of alignJustifyButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().setTextAlign('justify').run();
-          });
-        }
-
-        const undoButtons = this.shadowRoot.querySelectorAll('[editor-action="undo"]');
-        for (const button of undoButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().undo().run();
-          });
-        }
-
-        const redoButtons = this.shadowRoot.querySelectorAll('[editor-action="redo"]');
-        for (const button of redoButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().redo().run();
-          });
-        }
-
-        const colorChoices = this.shadowRoot.querySelectorAll('.color-swatch');
-        for (const colorChoice of colorChoices) {
-          colorChoice.addEventListener('click', () => {
-            // data-color
-            const color = colorChoice.getAttribute('data-color');
-            this.editor.chain().focus().setColor(color).run();
-          });
-        }
-
-        const highlightChoices = this.shadowRoot.querySelectorAll('.highlight-swatch');
-        for (const highlightChoice of highlightChoices) {
-          highlightChoice.addEventListener('click', () => {
-            // data-color
-            const color = highlightChoice.getAttribute('data-color');
-            this.editor.chain().focus().unsetHighlight().run();
-            if (color) {
-                this.editor.chain().focus().setHighlight({color: color}).run();
-            }
-          });
-        }
-
-        const customColorPickers = this.shadowRoot.querySelectorAll('.custom-color-picker');
-        for (const picker of customColorPickers) {
-          picker.addEventListener('input', (event) => {
-            const color = event.target.value;
-            this.editor.chain().focus().setColor(color).run();
-          });
-        }
-
-        const fontFamilyPickers = this.shadowRoot.querySelectorAll('[editor-action="select-font-family"]');
-        for (const picker of fontFamilyPickers) {
-          picker.addEventListener('change', (event) => {
-            const fontFamily = event.target.value;
-            if (fontFamily) {
-              this.editor.chain().focus().setFontFamily(fontFamily).run();
-            } else {
-              this.editor.chain().focus().unsetFontFamily().run();
-            }
-          });
-        }
-
-        const bulletListButtons = this.shadowRoot.querySelectorAll('[editor-action="bullet-list"]');
-        for (const button of bulletListButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().toggleBulletList().run();
-          });
-        }
-
-        const orderedListButtons = this.shadowRoot.querySelectorAll('[editor-action="ordered-list"]');
-        for (const button of orderedListButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().toggleOrderedList().run();
-          });
-        }
-
-        const tasksListButtons = this.shadowRoot.querySelectorAll('[editor-action="tasks-list"]');
-        for (const button of tasksListButtons) {
-          button.addEventListener('click', () => {
-            this.editor.chain().focus().toggleTaskList().run();
-          });
-        }
-
-        const setLineHeightButtons = this.shadowRoot.querySelectorAll('[editor-action="set-line-height"]');
-        for (const button of setLineHeightButtons) {
-          button.addEventListener('click', (event) => {
-            const lineHeight = event.target.getAttribute('data-value');
-            if (lineHeight) {
-              this.editor.chain().focus().setLineHeight(lineHeight).run();
-            } else {
-                this.editor.chain().focus().unsetLineHeight().run();
-            }
-          });
-        }
-        
+        this.bindClickEvents();
+        this.bindChangeEvents();
     }
 
     bindKeyboardShortcuts() {
+        document.addEventListener('keydown', (event) => {
+            if (!this.editor || !this.editor.isEditable) return;
 
+            // bind CTRL + ] to increment font size
+            if (event.ctrlKey && event.code === 'BracketRight') {
+                this.Actions.incrementFontSize();
+                return;
+            }
+
+            // bind CTRL + [ to decrement font size
+            if (event.ctrlKey && event.code === 'BracketLeft') {
+                this.Actions.decrementFontSize();
+                return;
+            }
+
+            // bind CTRL + L to toggle left alignment
+            if (event.ctrlKey && event.code === 'KeyL') {
+                event.preventDefault();
+                this.Actions.setTextAlign('left');
+                return;
+            }
+
+            // bind CTRL + E to toggle center alignment
+            if (event.ctrlKey && event.code === 'KeyE') {
+                event.preventDefault();
+                this.Actions.setTextAlign('center');
+                return;
+            }
+
+            // bind CTRL + R to toggle right alignment
+            if (event.ctrlKey && event.code === 'KeyR') {
+                event.preventDefault();
+                this.Actions.setTextAlign('right');
+                return;
+            }
+
+            // bind CTRL + J to toggle justify alignment
+            if (event.ctrlKey && event.code === 'KeyJ') {
+                event.preventDefault();
+                this.Actions.setTextAlign('justify');
+                return;
+            }
+
+            // bind CTRL + S to save content
+            if (event.ctrlKey && event.code === 'KeyS') {
+                event.preventDefault();
+                // save logic here
+                return;
+            }
+        });
+    }
+
+    runEditorAction({ action, value=null, target=null }) {
+        if (!this.editor) {
+            return;
+        }
+
+        switch (action) {
+            case 'bold':
+                this.Actions.toggleBold();
+                break;
+            case 'italic':
+                this.Actions.toggleItalic();
+                break;
+            case 'underline':
+                this.Actions.toggleUnderline();
+                break;
+            case 'strikethrough':
+                this.Actions.toggleStrike();
+                break;
+            case 'code':
+                this.Actions.toggleCode();
+                break;
+            case 'link':
+                this.Actions.addLink();
+                break;
+            case 'add-image':
+                this.Actions.addImage();
+                break;
+            case 'add-table':
+                this.Actions.addTable();
+                break;
+            case 'bullet-list':
+                this.Actions.toggleBulletList();
+                break;
+            case 'ordered-list':
+                this.Actions.toggleOrderedList();
+                break;
+            case 'tasks-list':
+                this.Actions.toggleTaskList();
+                break;
+            case 'align-left':
+                this.Actions.setTextAlign('left');
+                break;
+            case 'align-center':
+                this.Actions.setTextAlign('center');
+                break;
+            case 'align-right':
+                this.Actions.setTextAlign('right');
+                break;
+            case 'align-justify':
+                this.Actions.setTextAlign('justify');
+                break;
+            case 'undo':
+                this.Actions.undo();
+                break;
+            case 'redo':
+                this.Actions.redo();
+                break;
+            case 'set-line-height':
+                this.Actions.setLineHeight(value);
+                break;
+            case 'select-font-size':
+                // if the value is a number, set heading level
+                if (!isNaN(value) && value >= 1 && value <= 6) {
+                    this.Actions.setHeading(value);
+                    break;
+                }
+                this.Actions.setFontSize(value);
+                break;
+            case 'select-font-family':
+                this.Actions.setFontFamily(value);
+                break;
+            case 'set-text-color':
+                this.Actions.setTextColor(value);
+                break;
+            case 'set-text-highlight':
+                this.Actions.setTextHighlight(value);
+                break;
+            case 'clear-formatting':
+                this.Actions.clearFormatting();
+                break;
+            case 'quote':
+                this.Actions.toggleQuote();
+                break;
+            default:
+                console.warn(`Unknown editor action: ${action}`);
+                break;
+        }
     }
 
     updateFormattingSelections() {
@@ -1751,6 +1865,178 @@ class TiptapEditor extends HTMLElement {
                 preview.style.backgroundColor = '#000000';
             }
         }
+
+    }
+
+    Actions = {
+        toggleBold: () => {
+            this.editor.chain().focus().toggleBold().run();
+        },
+
+        toggleItalic: () => {
+            this.editor.chain().focus().toggleItalic().run();
+        },
+
+        toggleUnderline: () => {
+            this.editor.chain().focus().toggleUnderline().run();
+        },
+
+        toggleStrike: () => {
+            this.editor.chain().focus().toggleStrike().run();
+        },
+
+        toggleQuote: () => {
+            this.editor.chain().focus().toggleBlockquote().run();
+        },
+
+        toggleCode: () => {
+            this.editor.chain().focus().toggleCodeBlock().run();
+        },
+
+        addLink: () => {
+            const linkUrl = prompt('Enter link URL:');
+            if (linkUrl) {
+                this.editor.chain().focus().setLink({ href: linkUrl }).run();
+            }
+        },
+
+        addImage: () => {
+            const imageUrl = prompt('Enter image URL:');
+            if (imageUrl) {
+                this.editor.chain().focus().setImage({ src: imageUrl }).run();
+            }
+        },
+
+        addTable: () => {
+            const rows = parseInt(prompt('Enter number of rows:', '3'));
+            const cols = parseInt(prompt('Enter number of columns:', '3'));
+            if (!isNaN(rows) && !isNaN(cols) && rows > 0 && cols > 0) {
+                this.editor.chain().focus().insertTable({ rows, cols, withHeaderRow: true }).run();
+            }
+        },
+
+        setHeading: (level) => {
+            try {
+                level = parseInt(level);
+                if (isNaN(level) || level < 1 || level > 6) {
+                    console.warn('Invalid heading level:', level);
+                    return;
+                }
+            } catch (e) {
+                console.warn('Invalid heading level:', level);
+                return;
+            }
+            this.editor.chain().focus().unsetFontSize().run();
+            this.editor.chain().focus().setHeading({ level: level }).run();
+        },
+
+        setFontSize: (size) => {
+            this.editor.chain().focus().setNode('paragraph').run();
+            if (size) {
+                this.editor.chain().focus().setFontSize(size).run();
+            } else {
+                this.editor.chain().focus().unsetFontSize().run();
+            }
+        },
+
+        setFontFamily: (family) => {
+            if (family) {
+                this.editor.chain().focus().setFontFamily(family).run();
+            } else {
+                this.editor.chain().focus().unsetFontFamily().run();
+            }
+        },
+        
+        toggleBulletList: () => {
+            this.editor.chain().focus().toggleBulletList().run();
+        },
+
+        toggleOrderedList: () => {
+            this.editor.chain().focus().toggleOrderedList().run();
+        },
+
+        toggleTaskList: () => {
+            this.editor.chain().focus().toggleTaskList().run();
+        },
+
+        undo: () => {
+            this.editor.chain().focus().undo().run();
+        },
+
+        redo: () => {
+            this.editor.chain().focus().redo().run();
+        },
+
+        setTextAlign: (align) => {
+            this.editor.chain().focus().setTextAlign(align).run();
+        },
+
+        leftAlign: () => {
+            this.Actions.setTextAlign('left');
+        },
+
+        centerAlign: () => {
+            this.Actions.setTextAlign('center');
+        },
+
+        rightAlign: () => {
+            this.Actions.setTextAlign('right');
+        },
+
+        justifyAlign: () => {
+            this.Actions.setTextAlign('justify');
+        },
+
+        setLineHeight: (lineHeight) => {
+            if (lineHeight) {
+                this.editor.chain().focus().setLineHeight(lineHeight).run();
+            } else {
+                this.editor.chain().focus().unsetLineHeight().run();
+            }
+        },
+
+        setTextColor: (color) => {
+            if (color) {
+                this.editor.chain().focus().setColor(color).run();
+            } else {
+                this.editor.chain().focus().unsetColor().run();
+            }
+        },
+
+        setTextHighlight: (color) => {
+            if (color) {
+                this.editor.chain().focus().setHighlight({ color: color }).run();
+            } else {
+                this.editor.chain().focus().unsetHighlight().run();
+            }
+        },
+
+        incrementFontSize: () => {
+            const maxSize = 192;
+            const currentSize = this.getTextStyleState().fontSize || 16;
+            const newSize = Math.min(parseInt(currentSize) + 1, maxSize);
+            if (newSize !== currentSize) {
+                this.Actions.setFontSize(newSize + 'px');
+            }
+        },
+
+        decrementFontSize: () => {
+            const minSize = 6;
+            const currentSize = this.getTextStyleState().fontSize || 16;
+            const newSize = Math.max(parseInt(currentSize) - 1, minSize);
+            if (newSize !== currentSize) {
+                this.Actions.setFontSize(newSize + 'px');
+            }
+        },
+
+        clearFormatting: () => {
+            this.editor.chain().focus().clearNodes().unsetAllMarks().run();
+            this.editor.chain().focus().setParagraph().run();
+            this.editor.chain().focus().unsetFontSize().run();
+            this.editor.chain().focus().unsetFontFamily().run();
+            this.editor.chain().focus().unsetColor().run();
+            this.editor.chain().focus().unsetHighlight().run();
+        },
 
     }
 
