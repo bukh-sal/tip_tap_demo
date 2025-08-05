@@ -14,11 +14,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                "fontSize": "",
-                "lineHeight": ""
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                "fontSize": null,
+                "lineHeight": null
               }
             }
           ],
@@ -38,11 +38,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "20px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             }
           ],
@@ -62,11 +62,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "20px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             }
           ],
@@ -87,11 +87,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "20px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             }
           ],
@@ -111,11 +111,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "20px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             }
           ],
@@ -136,11 +136,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "20px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             }
           ],
@@ -176,11 +176,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                "fontSize": "",
-                "lineHeight": ""
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                "fontSize": null,
+                "lineHeight": null
               }
             }
           ],
@@ -206,11 +206,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "20px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             },
             {
@@ -233,11 +233,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "20px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             },
             {
@@ -260,11 +260,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "20px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             },
             {
@@ -287,11 +287,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "20px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             },
             {
@@ -314,11 +314,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 255)",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": "#0000ff",
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "20px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             },
             {
@@ -341,15 +341,21 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "rgb(0, 0, 0)",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": "#000000",
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "20px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             },
             {
               "type": "bold"
+            },
+            {
+              "type": "highlight",
+              "attrs": {
+                "color": "#F8FF00"
+              }
             }
           ],
           "text": "Colorful and important"
@@ -368,11 +374,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                "fontSize": "",
-                "lineHeight": ""
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                "fontSize": null,
+                "lineHeight": null
               }
             }
           ],
@@ -393,11 +399,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                "fontSize": "",
-                "lineHeight": ""
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                "fontSize": null,
+                "lineHeight": null
               }
             }
           ],
@@ -429,11 +435,11 @@ export const defaultContent = {
                     {
                       "type": "textStyle",
                       "attrs": {
-                        "backgroundColor": "",
-                        "color": "",
-                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                        "fontSize": "",
-                        "lineHeight": ""
+                        "backgroundColor": null,
+                        "color": null,
+                        "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                        "fontSize": null,
+                        "lineHeight": null
                       }
                     }
                   ],
@@ -458,11 +464,11 @@ export const defaultContent = {
                     {
                       "type": "textStyle",
                       "attrs": {
-                        "backgroundColor": "",
-                        "color": "",
-                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                        "fontSize": "",
-                        "lineHeight": ""
+                        "backgroundColor": null,
+                        "color": null,
+                        "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                        "fontSize": null,
+                        "lineHeight": null
                       }
                     }
                   ],
@@ -502,11 +508,11 @@ export const defaultContent = {
                     {
                       "type": "textStyle",
                       "attrs": {
-                        "backgroundColor": "",
-                        "color": "",
-                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                        "fontSize": "",
-                        "lineHeight": ""
+                        "backgroundColor": null,
+                        "color": null,
+                        "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                        "fontSize": null,
+                        "lineHeight": null
                       }
                     }
                   ],
@@ -531,11 +537,11 @@ export const defaultContent = {
                     {
                       "type": "textStyle",
                       "attrs": {
-                        "backgroundColor": "",
-                        "color": "",
-                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                        "fontSize": "",
-                        "lineHeight": ""
+                        "backgroundColor": null,
+                        "color": null,
+                        "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                        "fontSize": null,
+                        "lineHeight": null
                       }
                     }
                   ],
@@ -574,11 +580,11 @@ export const defaultContent = {
                     {
                       "type": "textStyle",
                       "attrs": {
-                        "backgroundColor": "",
-                        "color": "",
-                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                        "fontSize": "",
-                        "lineHeight": ""
+                        "backgroundColor": null,
+                        "color": null,
+                        "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                        "fontSize": null,
+                        "lineHeight": null
                       }
                     }
                   ],
@@ -606,11 +612,11 @@ export const defaultContent = {
                     {
                       "type": "textStyle",
                       "attrs": {
-                        "backgroundColor": "",
-                        "color": "",
-                        "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                        "fontSize": "",
-                        "lineHeight": ""
+                        "backgroundColor": null,
+                        "color": null,
+                        "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                        "fontSize": null,
+                        "lineHeight": null
                       }
                     }
                   ],
@@ -649,11 +655,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                "fontSize": "",
-                "lineHeight": ""
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                "fontSize": null,
+                "lineHeight": null
               }
             }
           ],
@@ -673,11 +679,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                "fontSize": "",
-                "lineHeight": ""
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                "fontSize": null,
+                "lineHeight": null
               }
             }
           ],
@@ -697,11 +703,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                "fontSize": "",
-                "lineHeight": ""
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                "fontSize": null,
+                "lineHeight": null
               }
             }
           ],
@@ -736,11 +742,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "24px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             }
           ],
@@ -763,11 +769,11 @@ export const defaultContent = {
                 {
                   "type": "textStyle",
                   "attrs": {
-                    "backgroundColor": "",
-                    "color": "",
-                    "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                    "fontSize": "",
-                    "lineHeight": ""
+                    "backgroundColor": null,
+                    "color": null,
+                    "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                    "fontSize": null,
+                    "lineHeight": null
                   }
                 },
                 {
@@ -799,11 +805,11 @@ export const defaultContent = {
                 {
                   "type": "textStyle",
                   "attrs": {
-                    "backgroundColor": "",
-                    "color": "",
-                    "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                    "fontSize": "",
-                    "lineHeight": ""
+                    "backgroundColor": null,
+                    "color": null,
+                    "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                    "fontSize": null,
+                    "lineHeight": null
                   }
                 }
               ],
@@ -831,11 +837,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "24px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             }
           ],
@@ -890,11 +896,11 @@ export const defaultContent = {
                         {
                           "type": "textStyle",
                           "attrs": {
-                            "backgroundColor": "",
-                            "color": "",
-                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                            "fontSize": "",
-                            "lineHeight": ""
+                            "backgroundColor": null,
+                            "color": null,
+                            "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                            "fontSize": null,
+                            "lineHeight": null
                           }
                         },
                         {
@@ -929,11 +935,11 @@ export const defaultContent = {
                         {
                           "type": "textStyle",
                           "attrs": {
-                            "backgroundColor": "",
-                            "color": "",
-                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                            "fontSize": "",
-                            "lineHeight": ""
+                            "backgroundColor": null,
+                            "color": null,
+                            "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                            "fontSize": null,
+                            "lineHeight": null
                           }
                         },
                         {
@@ -968,11 +974,11 @@ export const defaultContent = {
                         {
                           "type": "textStyle",
                           "attrs": {
-                            "backgroundColor": "",
-                            "color": "",
-                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                            "fontSize": "",
-                            "lineHeight": ""
+                            "backgroundColor": null,
+                            "color": null,
+                            "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                            "fontSize": null,
+                            "lineHeight": null
                           }
                         },
                         {
@@ -1012,11 +1018,11 @@ export const defaultContent = {
                         {
                           "type": "textStyle",
                           "attrs": {
-                            "backgroundColor": "",
-                            "color": "",
-                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                            "fontSize": "",
-                            "lineHeight": ""
+                            "backgroundColor": null,
+                            "color": null,
+                            "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                            "fontSize": null,
+                            "lineHeight": null
                           }
                         }
                       ],
@@ -1048,11 +1054,11 @@ export const defaultContent = {
                         {
                           "type": "textStyle",
                           "attrs": {
-                            "backgroundColor": "",
-                            "color": "",
-                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                            "fontSize": "",
-                            "lineHeight": ""
+                            "backgroundColor": null,
+                            "color": null,
+                            "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                            "fontSize": null,
+                            "lineHeight": null
                           }
                         }
                       ],
@@ -1084,11 +1090,11 @@ export const defaultContent = {
                         {
                           "type": "textStyle",
                           "attrs": {
-                            "backgroundColor": "",
-                            "color": "",
-                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                            "fontSize": "",
-                            "lineHeight": ""
+                            "backgroundColor": null,
+                            "color": null,
+                            "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                            "fontSize": null,
+                            "lineHeight": null
                           }
                         }
                       ],
@@ -1125,11 +1131,11 @@ export const defaultContent = {
                         {
                           "type": "textStyle",
                           "attrs": {
-                            "backgroundColor": "",
-                            "color": "",
-                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                            "fontSize": "",
-                            "lineHeight": ""
+                            "backgroundColor": null,
+                            "color": null,
+                            "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                            "fontSize": null,
+                            "lineHeight": null
                           }
                         }
                       ],
@@ -1161,11 +1167,11 @@ export const defaultContent = {
                         {
                           "type": "textStyle",
                           "attrs": {
-                            "backgroundColor": "",
-                            "color": "",
-                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                            "fontSize": "",
-                            "lineHeight": ""
+                            "backgroundColor": null,
+                            "color": null,
+                            "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                            "fontSize": null,
+                            "lineHeight": null
                           }
                         }
                       ],
@@ -1197,11 +1203,11 @@ export const defaultContent = {
                         {
                           "type": "textStyle",
                           "attrs": {
-                            "backgroundColor": "",
-                            "color": "",
-                            "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
-                            "fontSize": "",
-                            "lineHeight": ""
+                            "backgroundColor": null,
+                            "color": null,
+                            "fontFamily": "'IBM Plex Sans Arabic', monospace",
+                            "fontSize": null,
+                            "lineHeight": null
                           }
                         }
                       ],
@@ -1242,11 +1248,11 @@ export const defaultContent = {
             {
               "type": "textStyle",
               "attrs": {
-                "backgroundColor": "",
-                "color": "",
-                "fontFamily": "\"IBM Plex Sans Arabic\", monospace",
+                "backgroundColor": null,
+                "color": null,
+                "fontFamily": "'IBM Plex Sans Arabic', monospace",
                 "fontSize": "24px",
-                "lineHeight": ""
+                "lineHeight": null
               }
             }
           ],
