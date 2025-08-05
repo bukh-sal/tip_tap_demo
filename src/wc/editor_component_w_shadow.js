@@ -1631,7 +1631,6 @@ class TiptapEditor extends HTMLElement {
             const value = realTarget.getAttribute('data-value') || null;
 
             const data = { "type": "button", "action": action, "target": realTarget, "value": value };
-            console.log(data);
             this.runEditorAction(data);
         });
     }
