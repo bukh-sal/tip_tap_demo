@@ -865,6 +865,20 @@ class TiptapEditor extends HTMLElement {
                     height: 0;
                 }
 
+                .tiptap p.is-empty::before,
+                .tiptap h1.is-empty::before,
+                .tiptap h2.is-empty::before,
+                .tiptap h3.is-empty::before,
+                .tiptap h4.is-empty::before,
+                .tiptap h5.is-empty::before,
+                .tiptap h6.is-empty::before {
+                    content: attr(data-placeholder);
+                    float: left;
+                    color: #adb5bd;
+                    pointer-events: none;
+                    height: 0;
+                }
+
                 .tiptap mark {
                     background-color: #faf594;
                     border-radius: 0.4rem;
